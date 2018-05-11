@@ -11,12 +11,13 @@ import com.webmets.vanishedmc.siteconnection.UpdateChecker;
 public class VanishedMC {
 
 	// Variables
+	private final float version = 0.1f;
 	private UpdateChecker updateChecker = new UpdateChecker();
 	private BasicSettings basicSettings = new BasicSettings();
 
 	// Constructor
 	public void start() {
-		Display.setTitle("VanishedMC Client");
+		Display.setTitle("VanishedMC Client (v" + version + ")");
 	}
 
 	// Getters and setters
