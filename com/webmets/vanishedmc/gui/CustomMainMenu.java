@@ -18,6 +18,7 @@ import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.Project;
 
 import com.google.common.collect.Lists;
+import com.webmets.vanishedmc.VanishedMC;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -463,7 +464,7 @@ public class CustomMainMenu extends GuiScreen implements GuiYesNoCallback {
 		GlStateManager.scale(var9, var9, var9);
 		this.drawCenteredString(this.fontRendererObj, this.splashText, 0, -8, -256);
 		GlStateManager.popMatrix();
-		String var10 = "VanishedMC - by Webmets"; // Minecraft 1.8.8
+		String var10 = "VanishedMC - by Webmets " + (VanishedMC.instance.isUpdateAvailable() ? "(Update available)" : "");
 
 		if (this.mc.isDemo()) {
 			var10 = var10 + " Demo";

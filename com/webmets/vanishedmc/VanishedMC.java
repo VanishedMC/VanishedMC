@@ -14,6 +14,7 @@ public class VanishedMC {
 	private final float version = 0.1f;
 	private UpdateChecker updateChecker = new UpdateChecker();
 	private BasicSettings basicSettings = new BasicSettings();
+	private boolean updateAvailable = false;
 
 	// Constructor
 	public void start() {
@@ -27,6 +28,18 @@ public class VanishedMC {
 
 	public BasicSettings getBasicSettings() {
 		return basicSettings;
+	}
+	
+	public float getCurrentVersion(){
+		return version;
+	}
+	
+	public boolean isUpdateAvailable() {
+		return updateAvailable;
+	}
+	
+	public void setUpdateAvailable(boolean updateAvailable) {
+		this.updateAvailable = updateAvailable;
 	}
 	
 	// Static shit
