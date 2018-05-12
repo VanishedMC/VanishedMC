@@ -2,6 +2,10 @@ package com.webmets.vanishedmc.settings;
 
 public class BasicSettings {
 
+	/**
+	 * Basic settings about the client that don't belong anywhere mostly
+	 * */
+	
 	// Variables
 	private boolean customMenu = true;
 	
