@@ -12,7 +12,7 @@ public class EffectUtils {
 	}
 	
 	public static int getColorForY(int y, float offset) {
-		return getColorForY((float) (y+offset/3)/100);
+		return getColorForY((float) (y+offset/3f)/100);
 	}
 	
 }

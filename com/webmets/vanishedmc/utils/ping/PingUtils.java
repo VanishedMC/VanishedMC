@@ -23,7 +23,7 @@ public class PingUtils {
 				return;
 			}
 			try {
-				pingString = ping.get() + " ms";
+				pingString = ping.get() + "ms";
 			} catch (InterruptedException | ExecutionException ex) {
 				ex.printStackTrace();
 			}
@@ -34,7 +34,7 @@ public class PingUtils {
 		}
 		ServerData current = Minecraft.getMinecraft().getCurrentServerData();
 		if (current == null) {
-			pingString = "0 ms";
+			pingString = "0ms";
 			return;
 		}
 		ping = executor.submit((Callable<Long>) new Ping(current.serverIP));
