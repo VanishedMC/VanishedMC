@@ -4,10 +4,12 @@ import com.webmets.vanishedmc.VanishedMC;
 import com.webmets.vanishedmc.controllers.MouseController;
 import com.webmets.vanishedmc.settings.GuiHudCOORDSView;
 import com.webmets.vanishedmc.settings.GuiHudCPSView;
+import com.webmets.vanishedmc.utils.EffectUtils;
 import com.webmets.vanishedmc.utils.ping.PingUtils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import optifine.CustomColors;
 
 public class GuiHudModule {
 
@@ -15,9 +17,13 @@ public class GuiHudModule {
 	 * The main HUD module, showing FPS,CPS, and similair game stats
 	 */
 
+	// Variables
 	private Minecraft mc = Minecraft.getMinecraft();
 	private FontRenderer fr = mc.fontRendererObj;
 	private VanishedMC client = VanishedMC.instance;
+
+	// Settings
+	private String name = "&cVanishedMC";
 	private boolean showFPS = true;
 	private boolean showCOORDS = true;
 	private boolean CoordsOneLine = false;
@@ -27,30 +33,26 @@ public class GuiHudModule {
 	private GuiHudCOORDSView coordsView = GuiHudCOORDSView.COMPACT;
 
 	public void render(int x, int y) {
+		name = "&lVanishedMC";
 		int offset = 0;
+		if (!name.isEmpty()) {
+			if (name.contains("&")) {
+				fr.drawString(name.replace("&", "§"), x, y + offset, EffectUtils.getColorForY(y,offset));
+				offset += 10;
+			} else {
+				fr.drawString(name, x, y + offset, EffectUtils.getColorForY(y,offset));
+				offset += 10;
+			}
+		}
 		if (isShowFPS()) {
 			int fps = Minecraft.debugFPS;
-			fr.drawString("Fps " + fps, x, y, -1);
+			fr.drawString("Fps " + fps, x, y+offset, EffectUtils.getColorForY(y,offset));
 			offset += 10;
 		}
 		if (isShowCPS()) {
 			MouseController mouse = client.getMouseController();
-			String cps = "";
-			switch (cpsView) {
-			case COMBINED:
-				cps = (mouse.getLeftCPS() + mouse.getRightCPS()) + "";
-				break;
-			case LEFT:
-				cps = (mouse.getLeftCPS()) + "";
-				break;
-			case RIGHT:
-				cps = (mouse.getRightCPS()) + "";
-				break;
-			case SEPARATE:
-				cps = (mouse.getLeftCPS()) + " : " + (mouse.getRightCPS());
-				break;
-			}
-			fr.drawString("Cps " + cps, x, y + offset, -1);
+			String cps = client.getMouseController().getCps(cpsView);
+			fr.drawString("Cps " + cps, x, y + offset, EffectUtils.getColorForY(y,offset));
 			offset += 10;
 		}
 		if (isShowCOORDS()) {
@@ -76,24 +78,29 @@ public class GuiHudModule {
 				break;
 			}
 			if (isCoordsOneLine()) {
-				fr.drawString("x " + xCoord + ", y " + yCoord + ", z " + zCoord, x, y + offset, -1);
+				fr.drawString("x " + xCoord + ", y " + yCoord + ", z " + zCoord, x, y + offset, EffectUtils.getColorForY(y,offset));
 				offset += 10;
 			} else {
-				fr.drawString("x " + xCoord, x, y + offset, -1);
+				fr.drawString("x " + xCoord, x, y + offset, EffectUtils.getColorForY(y,offset));
 				offset += 10;
-				fr.drawString("y " + yCoord, x, y + offset, -1);
+				fr.drawString("y " + yCoord, x, y + offset, EffectUtils.getColorForY(y,offset));
 				offset += 10;
-				fr.drawString("z " + zCoord, x, y + offset, -1);
+				fr.drawString("z " + zCoord, x, y + offset, EffectUtils.getColorForY(y,offset));
 				offset += 10;
 			}
 			if (isShowPING()) {
-				fr.drawString("Ping: " + PingUtils.getPing(), x, y + offset, -1);
+				fr.drawString("Ping: " + PingUtils.getPing(), x, y + offset, EffectUtils.getColorForY(y,offset));
 				offset += 10;
+			}
+			for(int i = 1; i <= 20; i++) {
+				fr.drawString(i+"", x, y+offset, EffectUtils.getColorForY(y,offset));
+				offset+=10;
 			}
 		}
 
 	}
 
+	// Getters
 	public boolean isShowCOORDS() {
 		return showCOORDS;
 	}
@@ -122,6 +129,7 @@ public class GuiHudModule {
 		return coordsView;
 	}
 
+	// Setters
 	public void setCpsView(GuiHudCPSView cpsView) {
 		this.cpsView = cpsView;
 	}

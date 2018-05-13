@@ -38,7 +38,7 @@ public class PingUtils {
 			return;
 		}
 		ping = executor.submit((Callable<Long>) new Ping(current.serverIP));
-		nextUpdate = 100;
+		nextUpdate = 50;
 	}
 	
 	public static String getPing(){

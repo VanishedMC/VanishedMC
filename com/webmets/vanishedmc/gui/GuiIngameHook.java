@@ -1,12 +1,11 @@
 package com.webmets.vanishedmc.gui;
 
-import com.webmets.vanishedmc.VanishedMC;
-import com.webmets.vanishedmc.utils.ping.PingUtils;
+import org.lwjgl.input.Mouse;
 
+import com.webmets.vanishedmc.VanishedMC;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiIngame;
-import net.minecraft.client.multiplayer.ServerData;
 
 public class GuiIngameHook extends GuiIngame {
 

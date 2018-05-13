@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.webmets.vanishedmc.settings.GuiHudCPSView;
+
 public class MouseController {
 
 	private List<Long> leftClicks, rightClicks;
@@ -11,6 +13,25 @@ public class MouseController {
 	public MouseController() {
 		leftClicks = new ArrayList<>();
 		rightClicks = new ArrayList<>();
+	}
+	
+	public String getCps(GuiHudCPSView cpsView) {
+		String cps = "";
+		switch (cpsView) {
+		case COMBINED:
+			cps = (getLeftCPS() + getRightCPS()) + "";
+			break;
+		case LEFT:
+			cps = (getLeftCPS()) + "";
+			break;
+		case RIGHT:
+			cps = (getRightCPS()) + "";
+			break;
+		case SEPARATE:
+			cps = (getLeftCPS()) + " : " + (getRightCPS());
+			break;
+		}
+		return cps;
 	}
 
 	public int getLeftCPS() {
