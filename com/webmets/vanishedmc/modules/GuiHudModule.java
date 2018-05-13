@@ -1,5 +1,7 @@
 package com.webmets.vanishedmc.modules;
 
+import com.webmets.vanishedmc.VanishedMC;
+import com.webmets.vanishedmc.controllers.MouseController;
 import com.webmets.vanishedmc.settings.GuiHudCOORDSView;
 import com.webmets.vanishedmc.settings.GuiHudCPSView;
 
@@ -10,19 +12,20 @@ public class GuiHudModule {
 
 	/**
 	 * The main HUD module, showing FPS,CPS, and similair game stats
-	 * */
-	
+	 */
+
 	private Minecraft mc = Minecraft.getMinecraft();
 	private FontRenderer fr = mc.fontRendererObj;
+	private VanishedMC client = VanishedMC.instance;
 	private boolean showFPS = true;
 	private boolean showCOORDS = true;
+	private boolean CoordsOneLine = false;
 	private boolean showCPS = true;
 	private boolean showPING = true;
 	private GuiHudCPSView cpsView = GuiHudCPSView.SEPARATE;
 	private GuiHudCOORDSView coordsView = GuiHudCOORDSView.COMPACT;
 
 	public void render(int x, int y) {
-		coordsView = GuiHudCOORDSView.COMPACT;
 		int offset = 0;
 		if (isShowFPS()) {
 			int fps = Minecraft.debugFPS;
@@ -30,8 +33,23 @@ public class GuiHudModule {
 			offset += 10;
 		}
 		if (isShowCPS()) {
-			// TODO working cps counter
-			fr.drawString("Cps 0", x, y + offset, -1);
+			MouseController mouse = client.getMouseController();
+			String cps = "";
+			switch (cpsView) {
+			case COMBINED:
+				cps = (mouse.getLeftCPS() + mouse.getRightCPS()) + "";
+				break;
+			case LEFT:
+				cps = (mouse.getLeftCPS()) + "";
+				break;
+			case RIGHT:
+				cps = (mouse.getRightCPS()) + "";
+				break;
+			case SEPARATE:
+				cps = (mouse.getLeftCPS()) + " : " + (mouse.getRightCPS());
+				break;
+			}
+			fr.drawString("Cps " + cps, x, y + offset, -1);
 			offset += 10;
 		}
 		if (isShowCOORDS()) {
@@ -56,12 +74,17 @@ public class GuiHudModule {
 				zCoord = String.format("%.2f", (float) Minecraft.getMinecraft().thePlayer.posZ);
 				break;
 			}
-			fr.drawString("x " + xCoord, x, y + offset, -1);
-			offset += 10;
-			fr.drawString("y " + yCoord, x, y + offset, -1);
-			offset += 10;
-			fr.drawString("z " + zCoord, x, y + offset, -1);
-			offset += 10;
+			if (isCoordsOneLine()) {
+				fr.drawString("x " + xCoord + ", y " + yCoord + ", z " + zCoord, x, y + offset, -1);
+				offset += 10;
+			} else {
+				fr.drawString("x " + xCoord, x, y + offset, -1);
+				offset += 10;
+				fr.drawString("y " + yCoord, x, y + offset, -1);
+				offset += 10;
+				fr.drawString("z " + zCoord, x, y + offset, -1);
+				offset += 10;
+			}
 		}
 
 	}
@@ -72,6 +95,10 @@ public class GuiHudModule {
 
 	public boolean isShowFPS() {
 		return showFPS;
+	}
+
+	public boolean isCoordsOneLine() {
+		return CoordsOneLine;
 	}
 
 	public boolean isShowCPS() {
@@ -92,6 +119,10 @@ public class GuiHudModule {
 
 	public void setCpsView(GuiHudCPSView cpsView) {
 		this.cpsView = cpsView;
+	}
+
+	public void setCoordsOneLine(boolean coordsOneLine) {
+		this.CoordsOneLine = coordsOneLine;
 	}
 
 	public void setCoordsView(GuiHudCOORDSView coordsView) {

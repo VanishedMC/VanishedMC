@@ -6,10 +6,12 @@ import java.util.Date;
 import org.lwjgl.opengl.Display;
 
 import com.webmets.vanishedmc.controllers.KeyboardController;
+import com.webmets.vanishedmc.controllers.MouseController;
 import com.webmets.vanishedmc.modules.GuiHudModule;
 import com.webmets.vanishedmc.modules.ModuleManager;
 import com.webmets.vanishedmc.settings.BasicSettings;
 import com.webmets.vanishedmc.siteconnection.UpdateChecker;
+import com.webmets.vanishedmc.utils.AccountUtils;
 
 public class VanishedMC {
 
@@ -26,6 +28,7 @@ public class VanishedMC {
 	private KeyboardController keyboardController;
 	private ModuleManager moduleManager;
 	private GuiHudModule hudModule;
+	private MouseController mouseController;
 
 	// Constructor
 	public void start() {
@@ -34,6 +37,13 @@ public class VanishedMC {
 		keyboardController = new KeyboardController();
 		moduleManager = new ModuleManager();
 		hudModule = new GuiHudModule();
+		mouseController = new MouseController();
+		
+		// Used to automate login without storing password in the code
+		if(!AccountUtils.login.equalsIgnoreCase("null")) {
+			AccountUtils.login(AccountUtils.login);
+			AccountUtils.login = "null";
+		}
 	}
 
 	// Getters and setters
@@ -41,6 +51,10 @@ public class VanishedMC {
 		return updateChecker;
 	}
 
+	public MouseController getMouseController() {
+		return mouseController;
+	}
+	
 	public GuiHudModule getHudModule() {
 		return hudModule;
 	}
