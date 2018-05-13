@@ -4,6 +4,7 @@ import com.webmets.vanishedmc.VanishedMC;
 import com.webmets.vanishedmc.controllers.MouseController;
 import com.webmets.vanishedmc.settings.GuiHudCOORDSView;
 import com.webmets.vanishedmc.settings.GuiHudCPSView;
+import com.webmets.vanishedmc.utils.ping.PingUtils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -83,6 +84,10 @@ public class GuiHudModule {
 				fr.drawString("y " + yCoord, x, y + offset, -1);
 				offset += 10;
 				fr.drawString("z " + zCoord, x, y + offset, -1);
+				offset += 10;
+			}
+			if (isShowPING()) {
+				fr.drawString("Ping: " + PingUtils.getPing(), x, y + offset, -1);
 				offset += 10;
 			}
 		}
