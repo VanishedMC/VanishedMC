@@ -8,6 +8,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.webmets.vanishedmc.VanishedMC;
 import com.webmets.vanishedmc.gui.buttons.CustomButton;
+import com.webmets.vanishedmc.gui.settings.SettingsGui;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiLabel;
@@ -49,6 +50,7 @@ public class CustomMainMenu extends GuiMainMenu {
 
 		if (button.id == 5) { // settings
 			// this.mc.displayGuiScreen(new ConfigGui(this, true));
+			this.mc.displayGuiScreen(new SettingsGui());
 		}
 
 		if (button.id == 1) { // singleplayer

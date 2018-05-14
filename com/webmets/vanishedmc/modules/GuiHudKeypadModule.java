@@ -61,12 +61,12 @@ public class GuiHudKeypadModule {
 					: y + (getDistanceBetween() * 2) + (getSize() * 2) + (getSize() / 2);
 			// LMB
 			drawCustomRect(x, startHeight, x + (getSize() * 2) - (getSize() / 2) + (getDistanceBetween() * 0.5f),
-					endHeight, Mouse.isButtonDown(0) ? getKeyPressedColor() : getKeyReleasedColor());
+					endHeight, Mouse.isButtonDown(0) && mc.inGameHasFocus ? getKeyPressedColor() : getKeyReleasedColor());
 
 			// RMB
 			drawCustomRect(x + ((getSize() * 2) - (getSize() / 2)) + (getDistanceBetween() * 1.5f), startHeight,
 					x + (getSize() * 3) + (getDistanceBetween() * 2), endHeight,
-					Mouse.isButtonDown(1) ? getKeyPressedColor() : getKeyReleasedColor());
+					Mouse.isButtonDown(1) && mc.inGameHasFocus ? getKeyPressedColor() : getKeyReleasedColor());
 		}
 
 		float wX = ((x + getDistanceBetween() + getSize()) + (x + (getSize() * 2) + getDistanceBetween())) / 2;
@@ -172,7 +172,7 @@ public class GuiHudKeypadModule {
 	}
 
 	private int getColorForKey(int key) {
-		if (Keyboard.isKeyDown(key)) {
+		if (Keyboard.isKeyDown(key) && mc.inGameHasFocus) {
 			return getKeyPressedColor();
 		} else {
 			return getKeyReleasedColor();

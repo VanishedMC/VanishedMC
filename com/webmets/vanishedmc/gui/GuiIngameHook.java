@@ -1,9 +1,11 @@
 package com.webmets.vanishedmc.gui;
 
-import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 
 import com.webmets.vanishedmc.VanishedMC;
+import com.webmets.vanishedmc.gui.settings.Menu;
+import com.webmets.vanishedmc.gui.settings.SettingsGui;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiIngame;
@@ -18,6 +20,8 @@ public class GuiIngameHook extends GuiIngame {
 	private FontRenderer fr;
 	private VanishedMC client = VanishedMC.instance;
 
+	private int keyPadX = Display.getWidth() / 2 - 112, keyPadY = Display.getHeight() / 2 - 122;
+
 	public GuiIngameHook(Minecraft mcIn) {
 		super(mcIn);
 		mc = Minecraft.getMinecraft();
@@ -27,7 +31,24 @@ public class GuiIngameHook extends GuiIngame {
 	@Override
 	public void func_175180_a(float p_175180_1_) {
 		super.func_175180_a(p_175180_1_);
+		if (mc.currentScreen instanceof SettingsGui || mc.currentScreen instanceof Menu) {
+			return;
+		}
 		client.getHudModule().render(2, 3);
-		client.getKeypadModule().render(Display.getWidth()/2-500, Display.getHeight()/2-300); // 122
+		client.getKeypadModule().render(keyPadX, keyPadY); // 122
+
+	}
+
+	public void setKeypadLocation(int x, int y) {
+		this.keyPadX = x;
+		this.keyPadY = y;
+	}
+
+	public int getKeyPadX() {
+		return keyPadX;
+	}
+
+	public int getKeyPadY() {
+		return keyPadY;
 	}
 }

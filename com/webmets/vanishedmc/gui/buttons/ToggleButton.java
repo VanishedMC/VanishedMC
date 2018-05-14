@@ -9,9 +9,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 
-public class CustomButton extends GuiButton {
+public class ToggleButton extends GuiButton {
 
 	private List<ButtonAction> actions;
+	private boolean toggled = false;
 	
 	public void drawBorderedRect(int x, int y, int x1, int y1, int size, int borderC, int insideC) {
 		drawRect(x + size, y + size, x1 - size, y1 - size, insideC);
@@ -21,11 +22,11 @@ public class CustomButton extends GuiButton {
 		drawRect(x, y1 - size, x1, y1, borderC);
 	}
 
-	public CustomButton(int id, int x, int y, String s) {
+	public ToggleButton(int id, int x, int y, String s) {
 		this(id, x, y, 200, 20, s);
 	}
 
-	public CustomButton(int id, int x, int y, int l, int i1, String s) {
+	public ToggleButton(int id, int x, int y, int l, int i1, String s) {
 		super(id, x, y, l, i1, s);
 		actions = new ArrayList<>();
 	}
@@ -40,6 +41,14 @@ public class CustomButton extends GuiButton {
 		actions.add(action);
 	}
 
+	public boolean isToggled() {
+		return toggled;
+	}
+	
+	public void setToggled(boolean toggled) {
+		this.toggled = toggled;
+	}
+	
 	protected int getHoverState(boolean flag) {
 		byte byte0 = 1;
 		if (!enabled) {
@@ -57,7 +66,7 @@ public class CustomButton extends GuiButton {
 		FontRenderer fontrenderer = mc.fontRendererObj;
 		boolean flag = mx >= xPosition && my >= yPosition && mx < xPosition + width && my < yPosition + height; // Flag,
 		// button
-		if (flag) { // Hover Action
+		if (flag || isToggled()) { // Hover Action
 			drawBorderedRect(xPosition, yPosition, xPosition + width, yPosition + height, 1, 0xFF000000, 0x80000000);
 			drawCenteredString(fontrenderer, displayString, xPosition + width / 2, yPosition + (height - 8) / 2,
 					0xff666666);
