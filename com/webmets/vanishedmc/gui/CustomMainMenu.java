@@ -22,12 +22,13 @@ import net.minecraft.client.renderer.WorldRenderer;
 public class CustomMainMenu extends GuiMainMenu {
 
 	/**
-	 * The customized main menu, currently not touched. 
-	 * Extending the base Minecraft class to minimize copied code.
+	 * The customized main menu, currently not touched. Extending the base
+	 * Minecraft class to minimize copied code.
 	 * 
-	 * The customized GUI can be toggled on or off with one boolean, and will have direct
-	 * */
-	
+	 * The customized GUI can be toggled on or off with one boolean, and will
+	 * have direct
+	 */
+
 	@Override
 	protected void addSingleplayerMultiplayerButtons(int p_73969_1_, int p_73969_2_) {
 		int var3 = this.height / 4 + 48;
@@ -39,7 +40,7 @@ public class CustomMainMenu extends GuiMainMenu {
 		this.buttonList.add(new CustomButton(5, 10, y + 5, "Settings"));
 		this.buttonList.add(new CustomButton(6, this.width - 205, y + 5, "Website"));
 	}
-	
+
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
 		if (button.id == 0) { // settings
@@ -47,8 +48,7 @@ public class CustomMainMenu extends GuiMainMenu {
 		}
 
 		if (button.id == 5) { // settings
-			this.mc.displayGuiScreen(null);
-			//this.mc.displayGuiScreen(new ConfigGui(this, true));
+			// this.mc.displayGuiScreen(new ConfigGui(this, true));
 		}
 
 		if (button.id == 1) { // singleplayer
@@ -58,12 +58,12 @@ public class CustomMainMenu extends GuiMainMenu {
 		if (button.id == 2) { // multiplayer
 			this.mc.displayGuiScreen(new GuiMultiplayer(this));
 		}
-		
+
 		if (button.id == 4) { // exit
 			this.mc.shutdown();
 		}
-		
-		if (button.id == 6) { // Alt manager
+
+		if (button.id == 6) { // Website
 			try {
 				Class var3 = Class.forName("java.awt.Desktop");
 				Object var4 = var3.getMethod("getDesktop", new Class[0]).invoke((Object) null, new Object[0]);
@@ -74,7 +74,7 @@ public class CustomMainMenu extends GuiMainMenu {
 			}
 		}
 	}
-	
+
 	@Override
 	protected void renderSkybox(int p_73971_1_, int p_73971_2_, float p_73971_3_) {
 		this.mc.getFramebuffer().unbindFramebuffer();
@@ -102,7 +102,7 @@ public class CustomMainMenu extends GuiMainMenu {
 		var5.addVertexWithUV(0.0D, 0.0D, (double) this.zLevel, (double) (0.5F + var7), (double) (0.5F + var8));
 		var4.draw();
 	}
-	
+
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		GlStateManager.disableAlpha();
@@ -113,17 +113,17 @@ public class CustomMainMenu extends GuiMainMenu {
 		short var6 = 274;
 		int var7 = this.width / 2 - var6 / 2;
 		byte var8 = 70;
-		this.drawGradientRect(0, 0, this.width, this.height/2, -2130706433, 16777215);
+		this.drawGradientRect(0, 0, this.width, this.height / 2, -2130706433, 16777215);
 		this.drawGradientRect(this.width, this.height, 0, this.height / 3, Color.red.getRGB(), 16777215);
 		this.drawGradientRect(0, 0, this.width, this.height, 0, Integer.MIN_VALUE);
 		this.mc.getTextureManager().bindTexture(minecraftTitleTextures);
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
 		GL11.glPushMatrix();
-        GL11.glScalef(4.5f, 4.5f, 1.0f);
-        final String logo = "VanishedMC Client";
-        this.drawCenteredString(this.fontRendererObj, logo, this.width / 9, this.height / 15, 16711680);
-        GL11.glPopMatrix();
+		GL11.glScalef(4.5f, 4.5f, 1.0f);
+		final String logo = "VanishedMC Client";
+		this.drawCenteredString(this.fontRendererObj, logo, this.width / 9, this.height / 15, 16711680);
+		GL11.glPopMatrix();
 
 		var5.func_178991_c(-1);
 
@@ -133,7 +133,7 @@ public class CustomMainMenu extends GuiMainMenu {
 		String var11 = "Copyright Mojang AB. Do not distribute!";
 		this.drawString(this.fontRendererObj, var11, this.width - this.fontRendererObj.getStringWidth(var11) - 2,
 				this.height - 10, 16711680);
-		
+
 		if (this.field_92025_p != null && this.field_92025_p.length() > 0) {
 			drawRect(this.field_92022_t - 2, this.field_92021_u - 2, this.field_92020_v + 2, this.field_92019_w - 1,
 					1428160512);
@@ -141,7 +141,6 @@ public class CustomMainMenu extends GuiMainMenu {
 			this.drawString(this.fontRendererObj, this.field_146972_A, (this.width - this.field_92024_r) / 2,
 					((GuiButton) this.buttonList.get(0)).yPosition - 12, -1);
 		}
-		
 
 		drawButtons(mouseX, mouseY);
 	}

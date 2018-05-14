@@ -1,6 +1,7 @@
 package com.webmets.vanishedmc.gui;
 
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
 
 import com.webmets.vanishedmc.VanishedMC;
 import net.minecraft.client.Minecraft;
@@ -27,5 +28,6 @@ public class GuiIngameHook extends GuiIngame {
 	public void func_175180_a(float p_175180_1_) {
 		super.func_175180_a(p_175180_1_);
 		client.getHudModule().render(2, 3);
+		client.getKeypadModule().render(Display.getWidth()/2-500, Display.getHeight()/2-300); // 122
 	}
 }

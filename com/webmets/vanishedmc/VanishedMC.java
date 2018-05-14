@@ -7,6 +7,7 @@ import org.lwjgl.opengl.Display;
 
 import com.webmets.vanishedmc.controllers.KeyboardController;
 import com.webmets.vanishedmc.controllers.MouseController;
+import com.webmets.vanishedmc.modules.GuiHudKeypadModule;
 import com.webmets.vanishedmc.modules.GuiHudModule;
 import com.webmets.vanishedmc.modules.ModuleManager;
 import com.webmets.vanishedmc.settings.BasicSettings;
@@ -23,21 +24,28 @@ public class VanishedMC {
 	// Variables
 	private final float version = 0.1f;
 	private boolean updateAvailable = false;
+	
 	private UpdateChecker updateChecker = new UpdateChecker();
 	private BasicSettings basicSettings;
+	
 	private KeyboardController keyboardController;
+	private MouseController mouseController;
+	
 	private ModuleManager moduleManager;
 	private GuiHudModule hudModule;
-	private MouseController mouseController;
+	private GuiHudKeypadModule keypadModule;
 
 	// Constructor
 	public void start() {
 		Display.setTitle("VanishedMC Client (v" + version + ")");
 		basicSettings = new BasicSettings();
+
 		keyboardController = new KeyboardController();
+		mouseController = new MouseController();
+
 		moduleManager = new ModuleManager();
 		hudModule = new GuiHudModule();
-		mouseController = new MouseController();
+		keypadModule = new GuiHudKeypadModule();
 		
 		// Used to automate login without storing password in the code
 		if(!AccountUtils.login.equalsIgnoreCase("null")) {
@@ -51,6 +59,10 @@ public class VanishedMC {
 		return updateChecker;
 	}
 
+	public GuiHudKeypadModule getKeypadModule() {
+		return keypadModule;
+	}
+	
 	public MouseController getMouseController() {
 		return mouseController;
 	}
@@ -70,11 +82,7 @@ public class VanishedMC {
 	public boolean isUpdateAvailable() {
 		return updateAvailable;
 	}
-
-	public void setUpdateAvailable(boolean updateAvailable) {
-		this.updateAvailable = updateAvailable;
-	}
-
+	
 	public KeyboardController getKeyboardController() {
 		return keyboardController;
 	}
@@ -83,6 +91,10 @@ public class VanishedMC {
 		return moduleManager;
 	}
 
+	public void setUpdateAvailable(boolean updateAvailable) {
+		this.updateAvailable = updateAvailable;
+	}
+	
 	// Static shit
 	public static VanishedMC instance = new VanishedMC();
 	private static SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
