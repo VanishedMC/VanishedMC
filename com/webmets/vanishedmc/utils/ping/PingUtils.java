@@ -13,7 +13,8 @@ public class PingUtils {
 
 	private static Future<Long> ping;
 	private static String pingString = "";
-	private static int nextUpdate = 0;
+	private static long nextUpdate = 0;
+	private static int delay = 1000;
 
 	private static ExecutorService executor = Executors.newSingleThreadExecutor();;
 
@@ -28,8 +29,7 @@ public class PingUtils {
 				ex.printStackTrace();
 			}
 		}
-		if (nextUpdate > 0) {
-			--nextUpdate;
+		if (System.currentTimeMillis() < nextUpdate) {
 			return;
 		}
 		ServerData current = Minecraft.getMinecraft().getCurrentServerData();
@@ -38,7 +38,15 @@ public class PingUtils {
 			return;
 		}
 		ping = executor.submit((Callable<Long>) new Ping(current.serverIP));
-		nextUpdate = 10000;
+		nextUpdate = System.currentTimeMillis() + delay;
+	}
+	
+	public static int getDelay() {
+		return delay;
+	}
+	
+	public static void setDelay(int delay) {
+		PingUtils.delay = delay;
 	}
 	
 	public static String getPing(){
