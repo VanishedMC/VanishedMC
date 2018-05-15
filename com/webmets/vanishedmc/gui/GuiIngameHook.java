@@ -43,6 +43,14 @@ public class GuiIngameHook extends GuiIngame {
 		this.keyPadX = x;
 		this.keyPadY = y;
 	}
+	
+	public void setKeyPadX(int keyPadX) {
+		this.keyPadX = keyPadX;
+	}
+	
+	public void setKeyPadY(int keyPadY) {
+		this.keyPadY = keyPadY;
+	}
 
 	public int getKeyPadX() {
 		return keyPadX;

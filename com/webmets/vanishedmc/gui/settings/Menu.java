@@ -91,6 +91,12 @@ public class Menu extends GuiScreen {
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 	
+	@Override
+	public void onGuiClosed() {
+		super.onGuiClosed();
+		client.getFileManager().saveSettings();
+	}
+	
 	protected void drawBorderedRect(int x, int y, int x1, int y1, int size, int borderC, int insideC) {
 		drawRect(x + size, y + size, x1 - size, y1 - size, insideC);
 		drawRect(x + size, y + size, x1, y, borderC);

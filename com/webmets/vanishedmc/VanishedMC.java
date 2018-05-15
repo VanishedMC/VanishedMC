@@ -7,6 +7,7 @@ import org.lwjgl.opengl.Display;
 
 import com.webmets.vanishedmc.controllers.KeyboardController;
 import com.webmets.vanishedmc.controllers.MouseController;
+import com.webmets.vanishedmc.files.FileManager;
 import com.webmets.vanishedmc.modules.GuiHudKeypadModule;
 import com.webmets.vanishedmc.modules.GuiHudModule;
 import com.webmets.vanishedmc.modules.ModuleManager;
@@ -35,6 +36,8 @@ public class VanishedMC {
 	private GuiHudModule hudModule;
 	private GuiHudKeypadModule keypadModule;
 
+	private FileManager fileManager;
+	
 	// Constructor
 	public void start() {
 		Display.setTitle("VanishedMC Client (v" + version + ")");
@@ -47,6 +50,7 @@ public class VanishedMC {
 		hudModule = new GuiHudModule();
 		keypadModule = new GuiHudKeypadModule();
 		
+		fileManager = new FileManager();
 		// Used to automate login without storing password in the code
 		if(!AccountUtils.login.equalsIgnoreCase("null")) {
 			AccountUtils.login(AccountUtils.login);
@@ -55,6 +59,10 @@ public class VanishedMC {
 	}
 
 	// Getters and setters
+	public FileManager getFileManager() {
+		return fileManager;
+	}
+	
 	public UpdateChecker getUpdateChecker() {
 		return updateChecker;
 	}
