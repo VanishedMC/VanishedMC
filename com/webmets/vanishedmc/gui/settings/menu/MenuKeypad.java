@@ -21,14 +21,18 @@ public class MenuKeypad extends Menu {
 		((ToggleButton) buttonList.get(1)).setToggled(true);
 
 		// Initialize buttons
-		final ToggleButton showSpacebar = new ToggleButton(0, 140, 45, 100, 20, "Spacebar");
-		final ToggleButton showMouseButtons = new ToggleButton(0, 140, 70, 100, 20, "Mouse buttons");
-		final ToggleButton showMouseButtonsCPS = new ToggleButton(0, 245, 70, 100, 20, "Cps");
-		final ToggleButton showCPSInline = new ToggleButton(0, 350, 70, 100, 20, "Cps inline");
-		final SliderButton textScaleSlider = new SliderButton(0, 140, 95, 100, 20, 0, 10, "Text scale");
-		final SliderButton scaleSlider = new SliderButton(0, 140, 120, 100, 20, 0, 10, "Button size");
-		final SliderButton distanceSlider = new SliderButton(0, 140, 145, 100, 20, 0, 5, "Distance");
-		final ToggleButton setLocation = new ToggleButton(0, 140, 170, 100, 20, "Set location");
+		final ToggleButton showMouseButtons = new ToggleButton(0, 140, 30, 100, 20, "Mouse buttons");
+		final ToggleButton showMouseButtonsCPS = new ToggleButton(0, 245, 30, 100, 20, "Cps");
+		final ToggleButton showCPSInline = new ToggleButton(0, 350, 30, 100, 20, "Cps inline");
+
+		final SliderButton scaleSlider = new SliderButton(0, 140, 55, 100, 20, 0, 10, "Button size");
+		final SliderButton textScaleSlider = new SliderButton(0, 245, 55, 100, 20, 0, 10, "Text scale");
+		
+		final ToggleButton showSpacebar = new ToggleButton(0, 140, 80, 100, 20, "Spacebar");
+
+		final SliderButton distanceSlider = new SliderButton(0, 140, 105, 100, 20, 0, 5, "Distance");
+		
+		final ToggleButton setLocation = new ToggleButton(0, 140, 130, 100, 20, "Set location");
 
 		// Set states
 		showSpacebar.setToggled(keyPad.isSpaceBar());
@@ -128,6 +132,5 @@ public class MenuKeypad extends Menu {
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		super.drawScreen(mouseX, mouseY, partialTicks);
-		this.drawString(fontRendererObj, "Keypad", 140, 35, -1);
 	}
 }

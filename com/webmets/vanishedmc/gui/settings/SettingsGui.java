@@ -88,7 +88,6 @@ public class SettingsGui extends GuiScreen {
 		this.buttonList.add(potionhud);
 		this.buttonList.add(effects);
 		this.buttonList.add(modules);
-		System.out.println("load buttons");
 	}
 
 	@Override
