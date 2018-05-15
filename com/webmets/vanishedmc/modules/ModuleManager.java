@@ -15,10 +15,17 @@ public class ModuleManager {
 		modules = new ArrayList<>();
 		
 		modules.add(new GuiModule());
+		modules.add(new SprintModule());
 	}
 
 	public List<Module> getModules() {
 		return modules;
+	}
+	
+	public void tick(){
+		for(Module m : modules){
+			m.tick();
+		}
 	}
 
 	public Module getModule(Class<?> type) {
