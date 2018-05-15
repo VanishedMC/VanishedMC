@@ -1,5 +1,6 @@
 package com.webmets.vanishedmc.gui.settings;
 
+import java.awt.Color;
 import java.io.IOException;
 
 import com.webmets.vanishedmc.VanishedMC;
@@ -15,6 +16,7 @@ import net.minecraft.client.gui.GuiScreen;
 public class Menu extends GuiScreen {
 
 	protected VanishedMC client = VanishedMC.instance;
+	private boolean rendering = false;
 	
 	@Override
 	public void initGui() {
@@ -76,8 +78,25 @@ public class Menu extends GuiScreen {
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		this.drawRect(25, 25, width - 25, height - 25, 0xbb1c1c1c);
+		if (mc.theWorld == null) {
+			this.drawDefaultBackground();
+		}
+		if(!rendering) {
+			rendering = true;
+			this.drawGradientRect(25, 25, this.width-25, this.height-25, Color.red.getRGB(), 16777215);
+			this.drawGradientRect(25, 25, this.width-25, this.height-25, 0, Integer.MIN_VALUE);
+			rendering = false;
+		}
+		drawBorderedRect(23, 23, width-23, height-23, 2, 0xf0000000, 0);
 		super.drawScreen(mouseX, mouseY, partialTicks);
+	}
+	
+	protected void drawBorderedRect(int x, int y, int x1, int y1, int size, int borderC, int insideC) {
+		drawRect(x + size, y + size, x1 - size, y1 - size, insideC);
+		drawRect(x + size, y + size, x1, y, borderC);
+		drawRect(x, y, x + size, y1, borderC);
+		drawRect(x1, y1, x1 - size, y + size, borderC);
+		drawRect(x, y1 - size, x1, y1, borderC);
 	}
 
 }

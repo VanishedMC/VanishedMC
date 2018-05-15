@@ -42,6 +42,9 @@ public class SetKeypadLocation extends GuiScreen {
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		super.drawScreen(mouseX, mouseY, partialTicks);
+		if(Minecraft.getMinecraft().theWorld == null) {
+			this.drawDefaultBackground();
+		}
 		this.drawRect(0, 0, Display.getWidth(), Display.getHeight(), 0x50ffffff);
 	}
 
