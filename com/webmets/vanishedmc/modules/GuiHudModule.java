@@ -87,7 +87,8 @@ public class GuiHudModule {
 		}
 
 		if (isShowPING()) {
-			toRender.add("Ping " + PingUtils.getPing());
+			PingUtils.ping();
+			toRender.add("Ping " + PingUtils.serverPing + "ms");
 		}
 		
 		SprintModule sprint = (SprintModule) client.getModuleManager().getModule(SprintModule.class);

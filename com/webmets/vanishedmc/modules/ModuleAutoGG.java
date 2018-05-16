@@ -23,9 +23,6 @@ public class ModuleAutoGG extends Module {
 
 	public ModuleAutoGG() {
 		super("AutoGG", -1);
-		//triggers = Arrays.asList("1st Killer - ", "1st Place - ", "Winner: ", " - Damage Dealt - ", "Winning Team - ",
-		// 	"1st - ", "Winners: ", "Winning Team: ", "won the game!", "Top Seeker: ", "1st Place: ",
-		//		"Last team standing!", "Winner #1 (", "Top Surrvivors ", "Winners - ");
 		triggers = GetAutoGGTriggers.getTriggers();
 	}
 
