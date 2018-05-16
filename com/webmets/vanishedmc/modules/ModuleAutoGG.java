@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import com.webmets.vanishedmc.siteconnection.GetAutoGGTriggers;
 import com.webmets.vanishedmc.utils.AutoGGThread;
 import com.webmets.vanishedmc.utils.Utils;
 
@@ -22,9 +23,10 @@ public class ModuleAutoGG extends Module {
 
 	public ModuleAutoGG() {
 		super("AutoGG", -1);
-		triggers = Arrays.asList("1st Killer - ", "1st Place - ", "Winner: ", " - Damage Dealt - ", "Winning Team - ",
-				"1st - ", "Winners: ", "Winning Team: ", "won the game!", "Top Seeker: ", "1st Place: ",
-				"Last team standing!", "Winner #1 (", "Top Surrvivors ", "Winners - ");
+		//triggers = Arrays.asList("1st Killer - ", "1st Place - ", "Winner: ", " - Damage Dealt - ", "Winning Team - ",
+		// 	"1st - ", "Winners: ", "Winning Team: ", "won the game!", "Top Seeker: ", "1st Place: ",
+		//		"Last team standing!", "Winner #1 (", "Top Surrvivors ", "Winners - ");
+		triggers = GetAutoGGTriggers.getTriggers();
 	}
 
 	public void chatEvent(S02PacketChat packetIn) {

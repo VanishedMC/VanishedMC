@@ -32,6 +32,9 @@ public class SliderButton extends GuiButton {
 
 	@Override
 	public void drawButton(Minecraft mc, int mouseX, int mouseY) {
+		if(!visible){
+			return;
+		}
 		this.mouseDragged(mc, mouseX, mouseY);
 		boolean flag = mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width
 				&& mouseY < yPosition + height;
@@ -53,7 +56,7 @@ public class SliderButton extends GuiButton {
 	public void setValue(float value) {
 		this.value = (value / max);
 		this.displayValue = Float.parseFloat(String.format("%.0f", (this.value * max)));
-		this.displayString = name + " " + (int) displayValue;
+		this.displayString = name + " " + (int) (min + displayValue);
 	}
 
 	public float getValue() {
@@ -61,7 +64,7 @@ public class SliderButton extends GuiButton {
 	}
 
 	public float getDisplayValue() {
-		return displayValue;
+		return (int) (min + displayValue);
 	}
 
 	public void press() {
@@ -80,7 +83,7 @@ public class SliderButton extends GuiButton {
 			this.value = (float) (mouseX - (this.xPosition + 4)) / (float) (this.width - 8);
 			this.value = MathHelper.clamp_float(this.value, 0, 1);
 			this.displayValue = Float.parseFloat(String.format("%.0f", (value * max)));
-			this.displayString = name + " " + (int) displayValue;
+			this.displayString = name + " " + (int) (min + displayValue);
 			press();
 		}
 	}

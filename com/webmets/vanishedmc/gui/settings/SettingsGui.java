@@ -183,8 +183,8 @@ public class SettingsGui extends GuiScreen {
 		}
 		int border = 25;
 		if (loaded) {
-			this.drawGradientRect(25, 25, this.width-25, this.height-25, Color.red.getRGB(), 16777215);
-			this.drawGradientRect(25, 25, this.width-25, this.height-25, 0, Integer.MIN_VALUE);
+			this.drawGradientRect(25, 25, this.width-25, this.height-25, Color.red.getRGB(), 0x99222222);
+
 			drawBorderedRect(23, 23, width-23, height-23, 2, 0xf0000000, 0);
 		} else {
 			this.drawRect(border, border, animation1X, animation1Y, 0x80ff0000);

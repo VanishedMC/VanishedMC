@@ -117,15 +117,15 @@ public class MenuHud extends Menu {
 			}
 		});
 
-		// Adding to the list
-		this.buttonList.add(fps);
-		this.buttonList.add(cps);
-		this.buttonList.add(coords);
-		this.buttonList.add(coordsOneLine);
-		this.buttonList.add(ping);
-		this.buttonList.add(pingDelay);
-		this.buttonList.add(cpsMode);
-		this.buttonList.add(coordsMode);
+		// Adding to list
+		buttonList.add(fps);
+		buttonList.add(cps);
+		buttonList.add(coords);
+		buttonList.add(coordsOneLine);
+		buttonList.add(ping);
+		buttonList.add(pingDelay);
+		buttonList.add(cpsMode);
+		buttonList.add(coordsMode);
 	}
 
 	@Override
@@ -136,10 +136,5 @@ public class MenuHud extends Menu {
 		if (button instanceof SelectorButton) {
 			((SelectorButton) button).press();
 		}
-	}
-
-	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 }

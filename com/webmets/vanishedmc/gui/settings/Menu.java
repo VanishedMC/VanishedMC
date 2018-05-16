@@ -24,11 +24,11 @@ public class Menu extends GuiScreen {
 	@Override
 	public void initGui() {
 		ToggleButton hud = new ToggleButton(0, 30, 30, 100, 20, "Hud");
-		ToggleButton keypad = new ToggleButton(1, 30, 55, 100, 20, "Keypad");
-		ToggleButton armorhud = new ToggleButton(2, 30, 80, 100, 20, "Armor Hud");
-		ToggleButton potionhud = new ToggleButton(3, 30, 105, 100, 20, "Potion Hud");
-		ToggleButton effects = new ToggleButton(4, 30, 130, 100, 20, "Effects");
-		ToggleButton modules = new ToggleButton(5, 30, 155, 100, 20, "Modules");
+		ToggleButton keypad = new ToggleButton(0, 30, 55, 100, 20, "Keypad");
+		ToggleButton armorhud = new ToggleButton(0, 30, 80, 100, 20, "Armor Hud");
+		ToggleButton potionhud = new ToggleButton(0, 30, 105, 100, 20, "Potion Hud");
+		ToggleButton effects = new ToggleButton(0, 30, 130, 100, 20, "Effects");
+		ToggleButton modules = new ToggleButton(0, 30, 155, 100, 20, "Modules");
 		hud.addAction(new ButtonAction() {
 			@Override
 			public void execute() {
@@ -87,8 +87,7 @@ public class Menu extends GuiScreen {
 		}
 		if(!rendering) {
 			rendering = true;
-			this.drawGradientRect(25, 25, this.width-25, this.height-25, Color.red.getRGB(), 16777215);
-			this.drawGradientRect(25, 25, this.width-25, this.height-25, 0, Integer.MIN_VALUE);
+			this.drawGradientRect(25, 25, this.width-25, this.height-25, Color.red.getRGB(), 0x99222222);
 			rendering = false;
 		}
 		drawBorderedRect(23, 23, width-23, height-23, 2, 0xf0000000, 0);

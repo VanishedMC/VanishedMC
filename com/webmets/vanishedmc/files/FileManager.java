@@ -18,6 +18,8 @@ import com.webmets.vanishedmc.VanishedMC;
 import com.webmets.vanishedmc.gui.GuiIngameHook;
 import com.webmets.vanishedmc.modules.GuiHudKeypadModule;
 import com.webmets.vanishedmc.modules.GuiHudModule;
+import com.webmets.vanishedmc.modules.ModuleAutoGG;
+import com.webmets.vanishedmc.modules.SprintModule;
 import com.webmets.vanishedmc.settings.GuiHudCOORDSView;
 import com.webmets.vanishedmc.settings.GuiHudCPSView;
 import com.webmets.vanishedmc.utils.ping.PingUtils;
@@ -44,7 +46,9 @@ public class FileManager {
 		GuiHudModule hud = client.getHudModule();
 		GuiHudKeypadModule keypad = client.getKeypadModule();
 		GuiIngameHook hook = (GuiIngameHook) Minecraft.getMinecraft().ingameGUI;
-
+		ModuleAutoGG autoGG = (ModuleAutoGG) client.getModuleManager().getModule(ModuleAutoGG.class);
+		SprintModule sprint = (SprintModule) client.getModuleManager().getModule(SprintModule.class);
+		
 		try {
 			BufferedReader load;
 			load = new BufferedReader(new FileReader(settingsFile));
@@ -98,6 +102,18 @@ public class FileManager {
 						} else if (key2.equalsIgnoreCase("locationY")) {
 							hook.setKeyPadY(elm.getAsInt());
 						}
+					} else if(key.equalsIgnoreCase("modules")) {
+						if (key2.equalsIgnoreCase("autogg-enabled")) {
+							autoGG.setEnabled(elm.getAsBoolean());
+						} else if (key2.equalsIgnoreCase("autogg-delay")) {
+							autoGG.setDelay(elm.getAsInt());
+						} else if (key2.equalsIgnoreCase("sprint-enabled")) {
+							if(elm.getAsBoolean()) {
+								sprint.enable();
+							}
+						} else if (key2.equalsIgnoreCase("sprint-bind")) {
+							sprint.setBind(elm.getAsInt());
+						}
 					}
 				}
 			}
@@ -111,7 +127,9 @@ public class FileManager {
 		GuiHudModule hud = client.getHudModule();
 		GuiHudKeypadModule keypad = client.getKeypadModule();
 		GuiIngameHook hook = (GuiIngameHook) Minecraft.getMinecraft().ingameGUI;
-
+		ModuleAutoGG autoGG = (ModuleAutoGG) client.getModuleManager().getModule(ModuleAutoGG.class);
+		SprintModule sprint = (SprintModule) client.getModuleManager().getModule(SprintModule.class);
+		
 		try {
 			JsonObject object = new JsonObject();
 			{ // Hud
@@ -140,7 +158,15 @@ public class FileManager {
 				keyPadObject.addProperty("locationY", hook.getKeyPadY());
 				object.add("keypad", keyPadObject);
 			}
-
+			
+			{ // Modules
+				JsonObject modules = new JsonObject();
+				modules.addProperty("autogg-enabled", autoGG.getEnabled());
+				modules.addProperty("autogg-delay", autoGG.getDelay());
+				modules.addProperty("sprint-enabled", sprint.isEnabled());
+				modules.addProperty("sprint-bind", sprint.getBind());
+				object.add("modules", modules);
+			}
 			PrintWriter save = new PrintWriter(new FileWriter(settingsFile));
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			save.print(gson.toJson(object));

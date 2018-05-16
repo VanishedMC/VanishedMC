@@ -49,6 +49,10 @@ public abstract class Module {
 	public boolean isEnabled() {
 		return enabled;
 	}
+	
+	public void setBind(int bind) {
+		this.bind = bind;
+	}
 
 	public abstract void tick();
 

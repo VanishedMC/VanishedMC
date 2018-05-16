@@ -25,7 +25,7 @@ public class MenuKeypad extends Menu {
 		final ToggleButton showMouseButtonsCPS = new ToggleButton(0, 245, 30, 100, 20, "Cps");
 		final ToggleButton showCPSInline = new ToggleButton(0, 350, 30, 100, 20, "Cps inline");
 
-		final SliderButton scaleSlider = new SliderButton(0, 140, 55, 100, 20, 0, 10, "Button size");
+		final SliderButton scaleSlider = new SliderButton(0, 140, 55, 100, 20, 1, 9, "Button size");
 		final SliderButton textScaleSlider = new SliderButton(0, 245, 55, 100, 20, 0, 10, "Text scale");
 		
 		final ToggleButton showSpacebar = new ToggleButton(0, 140, 80, 100, 20, "Spacebar");
@@ -42,7 +42,7 @@ public class MenuKeypad extends Menu {
 		showMouseButtonsCPS.visible = showMouseButtons.isToggled();
 		showCPSInline.visible = showMouseButtonsCPS.isToggled() && showMouseButtons.isToggled();
 		textScaleSlider.setValue(keyPad.getScale() / 0.5f);
-		scaleSlider.setValue(keyPad.getSize() / 5);
+		scaleSlider.setValue((keyPad.getSize() / 5) - 1);
 		distanceSlider.setValue(keyPad.getDistanceBetween());
 
 		// Actions
@@ -127,10 +127,5 @@ public class MenuKeypad extends Menu {
 		if (button instanceof ToggleButton) {
 			((ToggleButton) button).press();
 		}
-	}
-
-	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 }
