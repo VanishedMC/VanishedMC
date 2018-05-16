@@ -23,7 +23,7 @@ public class VanishedMC {
 	 */
 
 	// Variables
-	private final float version = 0.1f;
+	private final float version = 0.2f;
 	private boolean updateAvailable = false;
 	
 	private UpdateChecker updateChecker = new UpdateChecker();

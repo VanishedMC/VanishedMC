@@ -34,7 +34,7 @@ public class GuiHudModule {
 	private boolean isLowerCase = false;
 	private GuiHudCPSView cpsView = GuiHudCPSView.SEPARATE;
 	private GuiHudCOORDSView coordsView = GuiHudCOORDSView.COMPACT;
-
+	
 	public void render(int x, int y) {
 		setLowerCase(false);
 		List<String> toRender = new ArrayList<>();
@@ -89,7 +89,12 @@ public class GuiHudModule {
 		if (isShowPING()) {
 			toRender.add("Ping " + PingUtils.getPing());
 		}
-
+		
+		SprintModule sprint = (SprintModule) client.getModuleManager().getModule(SprintModule.class);
+		if(sprint.isEnabled()) {
+			toRender.add("Sprint");
+		}
+		
 		for (String s : toRender) {
 			if(isLowerCase()) {
 				fr.drawString(s.replace("&", "§").toLowerCase(), x, y + offset, EffectUtils.getColorForY(y, offset));
