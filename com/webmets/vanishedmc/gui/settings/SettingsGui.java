@@ -8,8 +8,11 @@ import org.lwjgl.opengl.Display;
 import com.webmets.vanishedmc.gui.buttons.ButtonAction;
 import com.webmets.vanishedmc.gui.buttons.CustomButton;
 import com.webmets.vanishedmc.gui.buttons.ToggleButton;
+import com.webmets.vanishedmc.gui.settings.menu.MenuArmorHud;
 import com.webmets.vanishedmc.gui.settings.menu.MenuHud;
 import com.webmets.vanishedmc.gui.settings.menu.MenuKeypad;
+import com.webmets.vanishedmc.gui.settings.menu.MenuModules;
+import com.webmets.vanishedmc.gui.settings.menu.MenuPotionHud;
 import com.webmets.vanishedmc.utils.Utils;
 
 import net.minecraft.client.Minecraft;
@@ -65,11 +68,13 @@ public class SettingsGui extends GuiScreen {
 		armorhud.addAction(new ButtonAction() {
 			@Override
 			public void execute() {
+				Minecraft.getMinecraft().displayGuiScreen(new MenuArmorHud());
 			}
 		});
 		potionhud.addAction(new ButtonAction() {
 			@Override
 			public void execute() {
+				Minecraft.getMinecraft().displayGuiScreen(new MenuPotionHud());
 			}
 		});
 		effects.addAction(new ButtonAction() {
@@ -80,6 +85,7 @@ public class SettingsGui extends GuiScreen {
 		modules.addAction(new ButtonAction() {
 			@Override
 			public void execute() {
+				Minecraft.getMinecraft().displayGuiScreen(new MenuModules());
 			}
 		});
 		this.buttonList.add(hud);

@@ -16,6 +16,7 @@ public class ModuleManager {
 		
 		modules.add(new GuiModule());
 		modules.add(new SprintModule());
+		modules.add(new ModuleAutoGG());
 	}
 
 	public List<Module> getModules() {

@@ -6,8 +6,11 @@ import java.io.IOException;
 import com.webmets.vanishedmc.VanishedMC;
 import com.webmets.vanishedmc.gui.buttons.ButtonAction;
 import com.webmets.vanishedmc.gui.buttons.ToggleButton;
+import com.webmets.vanishedmc.gui.settings.menu.MenuArmorHud;
 import com.webmets.vanishedmc.gui.settings.menu.MenuHud;
 import com.webmets.vanishedmc.gui.settings.menu.MenuKeypad;
+import com.webmets.vanishedmc.gui.settings.menu.MenuModules;
+import com.webmets.vanishedmc.gui.settings.menu.MenuPotionHud;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -26,7 +29,6 @@ public class Menu extends GuiScreen {
 		ToggleButton potionhud = new ToggleButton(3, 30, 105, 100, 20, "Potion Hud");
 		ToggleButton effects = new ToggleButton(4, 30, 130, 100, 20, "Effects");
 		ToggleButton modules = new ToggleButton(5, 30, 155, 100, 20, "Modules");
-
 		hud.addAction(new ButtonAction() {
 			@Override
 			public void execute() {
@@ -42,11 +44,13 @@ public class Menu extends GuiScreen {
 		armorhud.addAction(new ButtonAction() {
 			@Override
 			public void execute() {
+				Minecraft.getMinecraft().displayGuiScreen(new MenuArmorHud());
 			}
 		});
 		potionhud.addAction(new ButtonAction() {
 			@Override
 			public void execute() {
+				Minecraft.getMinecraft().displayGuiScreen(new MenuPotionHud());
 			}
 		});
 		effects.addAction(new ButtonAction() {
@@ -57,9 +61,9 @@ public class Menu extends GuiScreen {
 		modules.addAction(new ButtonAction() {
 			@Override
 			public void execute() {
+				Minecraft.getMinecraft().displayGuiScreen(new MenuModules());
 			}
 		});
-
 		this.buttonList.add(hud);
 		this.buttonList.add(keypad);
 		this.buttonList.add(armorhud);

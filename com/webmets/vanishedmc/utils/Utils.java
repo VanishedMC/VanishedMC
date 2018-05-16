@@ -2,6 +2,8 @@ package com.webmets.vanishedmc.utils;
 
 import org.lwjgl.Sys;
 
+import net.minecraft.client.Minecraft;
+
 public class Utils {
 
 	public static long getTime() {
@@ -35,6 +37,10 @@ public class Utils {
 
 	public static void updateClock() {
 		getTimeSinceLast();
+	}
+	
+	public static boolean onHypixel() {
+		return Minecraft.getMinecraft().getCurrentServerData().serverIP.contains("hypixel.net");
 	}
 
 }

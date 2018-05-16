@@ -1,5 +1,7 @@
 package com.webmets.vanishedmc.gui.settings.menu;
 
-public class MenuArmorHud {
+import com.webmets.vanishedmc.gui.settings.Menu;
+
+public class MenuArmorHud extends Menu{
 
 }
