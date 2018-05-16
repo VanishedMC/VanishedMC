@@ -10,7 +10,6 @@ import java.util.Map.Entry;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -18,6 +17,7 @@ import com.webmets.vanishedmc.VanishedMC;
 import com.webmets.vanishedmc.gui.GuiIngameHook;
 import com.webmets.vanishedmc.modules.GuiHudKeypadModule;
 import com.webmets.vanishedmc.modules.GuiHudModule;
+import com.webmets.vanishedmc.modules.GuiModule;
 import com.webmets.vanishedmc.modules.ModuleAutoGG;
 import com.webmets.vanishedmc.modules.SprintModule;
 import com.webmets.vanishedmc.settings.GuiHudCOORDSView;
@@ -48,7 +48,8 @@ public class FileManager {
 		GuiIngameHook hook = (GuiIngameHook) Minecraft.getMinecraft().ingameGUI;
 		ModuleAutoGG autoGG = (ModuleAutoGG) client.getModuleManager().getModule(ModuleAutoGG.class);
 		SprintModule sprint = (SprintModule) client.getModuleManager().getModule(SprintModule.class);
-		
+		GuiModule gui = (GuiModule) client.getModuleManager().getModule(GuiModule.class);
+
 		try {
 			BufferedReader load;
 			load = new BufferedReader(new FileReader(settingsFile));
@@ -113,6 +114,8 @@ public class FileManager {
 							}
 						} else if (key2.equalsIgnoreCase("sprint-bind")) {
 							sprint.setBind(elm.getAsInt());
+						} else if (key2.equalsIgnoreCase("gui-bind")) {
+							gui.setBind(elm.getAsInt());
 						}
 					}
 				}
@@ -129,6 +132,7 @@ public class FileManager {
 		GuiIngameHook hook = (GuiIngameHook) Minecraft.getMinecraft().ingameGUI;
 		ModuleAutoGG autoGG = (ModuleAutoGG) client.getModuleManager().getModule(ModuleAutoGG.class);
 		SprintModule sprint = (SprintModule) client.getModuleManager().getModule(SprintModule.class);
+		GuiModule gui = (GuiModule) client.getModuleManager().getModule(GuiModule.class);
 		
 		try {
 			JsonObject object = new JsonObject();
@@ -165,6 +169,7 @@ public class FileManager {
 				modules.addProperty("autogg-delay", autoGG.getDelay());
 				modules.addProperty("sprint-enabled", sprint.isEnabled());
 				modules.addProperty("sprint-bind", sprint.getBind());
+				modules.addProperty("gui-bind", gui.getBind());
 				object.add("modules", modules);
 			}
 			PrintWriter save = new PrintWriter(new FileWriter(settingsFile));
