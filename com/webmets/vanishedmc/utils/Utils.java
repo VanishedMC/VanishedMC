@@ -3,6 +3,8 @@ package com.webmets.vanishedmc.utils;
 import org.lwjgl.Sys;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ServerAddress;
+import net.minecraft.client.multiplayer.ServerData;
 
 public class Utils {
 
@@ -40,7 +42,9 @@ public class Utils {
 	}
 	
 	public static boolean onHypixel() {
-		return Minecraft.getMinecraft().getCurrentServerData().serverIP.contains("hypixel.net");
+		ServerData server = Minecraft.getMinecraft().getCurrentServerData();
+		ServerAddress address = ServerAddress.func_78860_a(server.serverIP);
+		return address.getIP().contains("hypixel");
 	}
 
 }
