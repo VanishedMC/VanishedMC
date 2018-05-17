@@ -6,7 +6,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.webmets.vanishedmc.VanishedMC;
 import com.webmets.vanishedmc.gui.GuiIngameHook;
-import com.webmets.vanishedmc.utils.EffectUtils;
+import com.webmets.vanishedmc.utils.effects.EffectUtils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -17,6 +17,7 @@ public class GuiHudKeypadModule {
 	private Minecraft mc = Minecraft.getMinecraft();
 	private FontRenderer fr = mc.fontRendererObj;
 	private VanishedMC client = VanishedMC.instance;
+	private EffectUtils effect;
 
 	// Settings
 	private boolean showMouseButtons = true;
@@ -29,6 +30,11 @@ public class GuiHudKeypadModule {
 	private int keyPressedColor = 0xaacccccc;
 	private int keyReleasedColor = 0xaa1c1a1a;
 
+	// Constructor
+	public GuiHudKeypadModule() {
+		effect = new EffectUtils();
+	}
+	
 	public void render(int x, int y) {
 		// W
 		drawCustomRect(x + getDistanceBetween() + getSize(), y, x + (getSize() * 2) + getDistanceBetween(),
@@ -101,32 +107,32 @@ public class GuiHudKeypadModule {
 		GL11.glPushMatrix();
 		GL11.glTranslatef(wX, wY, 0);
 		GL11.glScalef(scale, scale, scale);
-		drawCenteredString("W", 0, 0, EffectUtils.getColorForY(y, 0));
+		drawCenteredString("W", 0, 0, effect.getColorForY(y, 0));
 		GL11.glPopMatrix();
 
 		GL11.glPushMatrix();
 		GL11.glTranslatef(aX, aY, 0);
 		GL11.glScalef(scale, scale, scale);
-		drawCenteredString("A", 0, 0, EffectUtils.getColorForY(y, 20));
+		drawCenteredString("A", 0, 0, effect.getColorForY(y, 20));
 		GL11.glPopMatrix();
 
 		GL11.glPushMatrix();
 		GL11.glTranslatef(sX, sY, 0);
 		GL11.glScalef(scale, scale, scale);
-		drawCenteredString("S", 0, 0, EffectUtils.getColorForY(y, 20));
+		drawCenteredString("S", 0, 0, effect.getColorForY(y, 20));
 		GL11.glPopMatrix();
 
 		GL11.glPushMatrix();
 		GL11.glTranslatef(dX, dY, 0);
 		GL11.glScalef(scale, scale, scale);
-		drawCenteredString("D", 0, 0, EffectUtils.getColorForY(y, 20));
+		drawCenteredString("D", 0, 0, effect.getColorForY(y, 20));
 		GL11.glPopMatrix();
 
 		if (isSpaceBar()) {
 			GL11.glPushMatrix();
 			GL11.glTranslatef(spaceX, spaceY, 0);
 			GL11.glScalef(scale, scale, scale);
-			drawCenteredString("§m------", 0, 0, EffectUtils.getColorForY(y, 40));
+			drawCenteredString("§m------", 0, 0, effect.getColorForY(y, 40));
 			GL11.glPopMatrix();
 		}
 
@@ -147,12 +153,12 @@ public class GuiHudKeypadModule {
 			GL11.glTranslatef(leftMouseX, leftMouseY, 0);
 			if(lmb.contains("~")) {
 				GL11.glScalef(scale / 1.7f, scale / 1.7f, 0);
-				drawCenteredString(lmb.split("~")[0], 0, -2, EffectUtils.getColorForY(y, isSpaceBar() ? 60 : 40));
+				drawCenteredString(lmb.split("~")[0], 0, -2, effect.getColorForY(y, isSpaceBar() ? 60 : 40));
 				GL11.glScalef(scale / 2f, scale / 2f, 0);
-				drawCenteredString(lmb.split("~")[1], 0, 9, EffectUtils.getColorForY(y, isSpaceBar() ? 60 : 40));
+				drawCenteredString(lmb.split("~")[1], 0, 9, effect.getColorForY(y, isSpaceBar() ? 60 : 40));
 			} else {
 				GL11.glScalef(scale / 1.5f, scale / 1.5f, 0);
-				drawCenteredString(lmb, 0, 0, EffectUtils.getColorForY(y, isSpaceBar() ? 60 : 40));
+				drawCenteredString(lmb, 0, 0, effect.getColorForY(y, isSpaceBar() ? 60 : 40));
 			}
 			GL11.glPopMatrix();
 			
@@ -160,12 +166,12 @@ public class GuiHudKeypadModule {
 			GL11.glTranslatef(rightMouseX, rightMouseY, 0);
 			if(rmb.contains("~")) {
 				GL11.glScalef(scale / 1.7f, scale / 1.7f, 0);
-				drawCenteredString(rmb.split("~")[0], 0, -2, EffectUtils.getColorForY(y, isSpaceBar() ? 60 : 40));
+				drawCenteredString(rmb.split("~")[0], 0, -2, effect.getColorForY(y, isSpaceBar() ? 60 : 40));
 				GL11.glScalef(scale / 2f, scale / 2f, 0);
-				drawCenteredString(rmb.split("~")[1], 0, 9, EffectUtils.getColorForY(y, isSpaceBar() ? 60 : 40));
+				drawCenteredString(rmb.split("~")[1], 0, 9, effect.getColorForY(y, isSpaceBar() ? 60 : 40));
 			} else {
 				GL11.glScalef(scale / 1.5f, scale / 1.5f, 0);
-				drawCenteredString(rmb, 0, 0, EffectUtils.getColorForY(y, isSpaceBar() ? 60 : 40));
+				drawCenteredString(rmb, 0, 0, effect.getColorForY(y, isSpaceBar() ? 60 : 40));
 			}
 			GL11.glPopMatrix();
 		}

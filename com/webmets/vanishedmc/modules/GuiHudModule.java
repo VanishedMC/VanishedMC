@@ -7,7 +7,7 @@ import com.webmets.vanishedmc.VanishedMC;
 import com.webmets.vanishedmc.controllers.MouseController;
 import com.webmets.vanishedmc.settings.GuiHudCOORDSView;
 import com.webmets.vanishedmc.settings.GuiHudCPSView;
-import com.webmets.vanishedmc.utils.EffectUtils;
+import com.webmets.vanishedmc.utils.effects.EffectUtils;
 import com.webmets.vanishedmc.utils.ping.PingUtils;
 
 import net.minecraft.client.Minecraft;
@@ -23,6 +23,7 @@ public class GuiHudModule {
 	private Minecraft mc = Minecraft.getMinecraft();
 	private FontRenderer fr = mc.fontRendererObj;
 	private VanishedMC client = VanishedMC.instance;
+	private EffectUtils effects;
 
 	// Settings
 	private String name = "&lVanishedMC";
@@ -35,8 +36,12 @@ public class GuiHudModule {
 	private GuiHudCPSView cpsView = GuiHudCPSView.SEPARATE;
 	private GuiHudCOORDSView coordsView = GuiHudCOORDSView.COMPACT;
 	
+	// Constructor
+	public GuiHudModule() {
+		effects = new EffectUtils();
+	}
+	
 	public void render(int x, int y) {
-		setLowerCase(false);
 		List<String> toRender = new ArrayList<>();
 		int offset = 0;
 
@@ -98,9 +103,9 @@ public class GuiHudModule {
 		
 		for (String s : toRender) {
 			if(isLowerCase()) {
-				fr.drawString(s.replace("&", "§").toLowerCase(), x, y + offset, EffectUtils.getColorForY(y, offset));
+				fr.drawString(s.replace("&", "§").toLowerCase(), x, y + offset, effects.getColorForY(y, offset));
 			} else {
-				fr.drawString(s.replace("&", "§"), x, y + offset, EffectUtils.getColorForY(y, offset));
+				fr.drawString(s.replace("&", "§"), x, y + offset, effects.getColorForY(y, offset));
 			}
 			offset += 10;
 		}
