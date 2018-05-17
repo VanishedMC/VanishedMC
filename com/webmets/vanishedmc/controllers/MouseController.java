@@ -14,48 +14,47 @@ public class MouseController {
 		leftClicks = new ArrayList<>();
 		rightClicks = new ArrayList<>();
 	}
-	
+
 	public String getCps(GuiHudCPSView cpsView) {
 		String cps = "";
 		switch (cpsView) {
-		case COMBINED:
-			cps = (getLeftCPS() + getRightCPS()) + "";
-			break;
-		case LEFT:
-			cps = (getLeftCPS()) + "";
-			break;
-		case RIGHT:
-			cps = (getRightCPS()) + "";
-			break;
-		case SEPARATE:
-			cps = (getLeftCPS()) + " : " + (getRightCPS());
-			break;
+			case COMBINED:
+				cps = String.valueOf(getLeftCPS() + getRightCPS());
+				break;
+			case LEFT:
+				cps = String.valueOf(getLeftCPS());
+				break;
+			case RIGHT:
+				cps = String.valueOf(getRightCPS());
+				break;
+			case SEPARATE:
+				cps = getLeftCPS() + " : " + getRightCPS();
+				break;
 		}
 		return cps;
 	}
 
 	public int getLeftCPS() {
-		long time = System.currentTimeMillis();
-		Iterator<Long> iterator = leftClicks.iterator();
-		while (iterator.hasNext()) {
-			if (iterator.next() + 1000L < time) {
-				iterator.remove();
-			}
-		}
-		iterator = null;
-		return this.leftClicks.size();
+		return getCPS(this.leftClicks);
 	}
 
 	public int getRightCPS() {
+		return getCPS(this.rightClicks);
+	}
+
+	private int getCPS(List<Long> clicks) {
+		clearCPS(clicks);
+		return this.clicks.size();
+	}
+
+	private void clearCPS(List<Long> clicks) {
 		long time = System.currentTimeMillis();
-		Iterator<Long> iterator = rightClicks.iterator();
+		Iterator<Long> iterator = clicks.iterator();
 		while (iterator.hasNext()) {
 			if (iterator.next() + 1000L < time) {
 				iterator.remove();
 			}
 		}
-		iterator = null;
-		return this.rightClicks.size();
 	}
 
 	public void leftClick() {
