@@ -44,7 +44,7 @@ public class MouseController {
 
 	private int getCPS(List<Long> clicks) {
 		clearCPS(clicks);
-		return this.clicks.size();
+		return clicks.size();
 	}
 
 	private void clearCPS(List<Long> clicks) {

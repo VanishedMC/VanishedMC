@@ -37,7 +37,7 @@ public class MenuHud extends Menu {
 		final ToggleButton fps = new ToggleButton(0, 140, 80, 100, 20, "Fps");
 
 		final ToggleButton ping = new ToggleButton(0, 140, 105, 100, 20, "Ping");
-		final SliderButton pingDelay = new SliderButton(0, 245, 105, 100, 20, 0, 10, "delay");
+		final SliderButton pingDelay = new SliderButton(0, 245, 105, 100, 20, 5, 5, "delay");
 
 		// Set states
 		fps.setToggled(hud.isShowFPS());
@@ -50,7 +50,7 @@ public class MenuHud extends Menu {
 		coordsMode.setCurrent(hud.getCoordsView().toString().toLowerCase());
 		coordsMode.visible = coords.isToggled();
 		ping.setToggled(hud.isShowPING());
-		pingDelay.setValue(PingUtils.getDelay() / 1000);
+		pingDelay.setValue((PingUtils.getDelay() / 1000) - 5);
 
 		// Actions
 		pingDelay.addAction(new ButtonAction() {
