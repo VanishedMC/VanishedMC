@@ -221,6 +221,10 @@ public class GuiHudKeypadModule {
 	public float getScale() {
 		return scale;
 	}
+	
+	public EffectUtils getEffectUtils() {
+		return effect;
+	}
 
 	// Setters
 	public void setShowMouseButtons(boolean showMouseButtons) {

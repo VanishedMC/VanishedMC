@@ -9,6 +9,7 @@ import com.webmets.vanishedmc.gui.buttons.ButtonAction;
 import com.webmets.vanishedmc.gui.buttons.CustomButton;
 import com.webmets.vanishedmc.gui.buttons.ToggleButton;
 import com.webmets.vanishedmc.gui.settings.menu.MenuArmorHud;
+import com.webmets.vanishedmc.gui.settings.menu.MenuEffect;
 import com.webmets.vanishedmc.gui.settings.menu.MenuHud;
 import com.webmets.vanishedmc.gui.settings.menu.MenuKeypad;
 import com.webmets.vanishedmc.gui.settings.menu.MenuModules;
@@ -80,6 +81,7 @@ public class SettingsGui extends GuiScreen {
 		effects.addAction(new ButtonAction() {
 			@Override
 			public void execute() {
+				Minecraft.getMinecraft().displayGuiScreen(new MenuEffect());
 			}
 		});
 		modules.addAction(new ButtonAction() {

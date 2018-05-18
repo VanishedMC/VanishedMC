@@ -10,7 +10,7 @@ public class EffectUtils {
 	private float rainbowSpeed = 1000.0f;
 	private float rainbowSize = 3f;
 	private EffectMode mode = EffectMode.RAINBOW;
-	private int staticColor = 0x00ffffff;
+	private Color staticColor = new Color(255, 255, 255);
 	
 	private int getRainbowColorForY(float offset) {
 		return Color.HSBtoRGB(1 + (System.currentTimeMillis() % (int) rainbowSpeed / rainbowSpeed) + offset, 1f, 1);
@@ -21,7 +21,7 @@ public class EffectUtils {
 		case RAINBOW:
 			return getRainbowColorForY((float) (y+offset/rainbowSize)/100);
 		case STATIC:
-			return staticColor;		
+			return staticColor.getRGB();		
 		}
 		return -1;
 	}
@@ -42,12 +42,20 @@ public class EffectUtils {
 		return rainbowSize;
 	}
 	
-	public int getStaticColor() {
+	public Color getStaticColor() {
 		return staticColor;
 	}
 	
-	public void setStaticColor(int staticColor) {
-		this.staticColor = staticColor;
+	public void setStaticColorRed(int red) {
+		this.staticColor = new Color(red, staticColor.getGreen(), staticColor.getBlue());
+	}
+	
+	public void setStaticColorGreen(int green) {
+		this.staticColor = new Color(staticColor.getRed(), green, staticColor.getBlue());
+	}
+	
+	public void setStaticColorBlue(int blue) {
+		this.staticColor = new Color(staticColor.getRed(), staticColor.getGreen(), blue);
 	}
 	
 	public void setRainbowSize(float rainbowSize) {
@@ -55,6 +63,6 @@ public class EffectUtils {
 	}
 	
 	public void setRainbowSpeed(float rainbowSpeed) {
-		this.rainbowSpeed = rainbowSpeed;
+		this.rainbowSpeed = (2000 - rainbowSpeed);
 	}
 }

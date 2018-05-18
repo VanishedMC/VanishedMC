@@ -144,6 +144,10 @@ public class GuiHudModule {
 	public boolean isLowerCase() {
 		return isLowerCase;
 	}
+	
+	public EffectUtils getEffectUtils() {
+		return effects;
+	}
 
 	// Setters
 	public void setCpsView(GuiHudCPSView cpsView) {

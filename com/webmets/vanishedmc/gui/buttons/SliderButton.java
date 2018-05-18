@@ -1,5 +1,6 @@
 package com.webmets.vanishedmc.gui.buttons;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import net.minecraft.util.MathHelper;
 public class SliderButton extends GuiButton {
 
 	private List<ButtonAction> actions;
+	private Color color = null;
 
 	public SliderButton(int buttonId, int x, int y, int min, int max, String buttonText) {
 		this(buttonId, x, y, 200, 20, min, max, buttonText);
@@ -32,7 +34,7 @@ public class SliderButton extends GuiButton {
 
 	@Override
 	public void drawButton(Minecraft mc, int mouseX, int mouseY) {
-		if(!visible){
+		if (!visible) {
 			return;
 		}
 		this.mouseDragged(mc, mouseX, mouseY);
@@ -48,9 +50,15 @@ public class SliderButton extends GuiButton {
 		drawCenteredString(mc.fontRendererObj, displayString, xPosition + width / 2, yPosition + (height - 8) / 2,
 				0xFFCCCCCC);
 
-		drawBorderedRect((int) (xPosition + this.value * (float) (this.width - 8)), this.yPosition,
-				(int) (xPosition + this.value * (float) (this.width - 7)) + 8, this.yPosition + height, 1, 0xFF000000,
-				0x80000000);
+		if (color == null) {
+			drawBorderedRect((int) (xPosition + this.value * (float) (this.width - 8)), this.yPosition,
+					(int) (xPosition + this.value * (float) (this.width - 7)) + 8, this.yPosition + height, 1,
+					0xFF000000, 0x80000000);
+		} else {
+			drawBorderedRect((int) (xPosition + this.value * (float) (this.width - 8)), this.yPosition,
+					(int) (xPosition + this.value * (float) (this.width - 7)) + 8, this.yPosition + height, 1,
+					color.getRGB(), color.getRGB());
+		}
 	}
 
 	public void setValue(float value) {
@@ -71,6 +79,10 @@ public class SliderButton extends GuiButton {
 		for (ButtonAction action : actions) {
 			action.execute();
 		}
+	}
+	
+	public void setColor(Color color) {
+		this.color = color;
 	}
 
 	public void addAction(ButtonAction action) {
