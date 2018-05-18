@@ -22,6 +22,8 @@ import com.webmets.vanishedmc.modules.ModuleAutoGG;
 import com.webmets.vanishedmc.modules.SprintModule;
 import com.webmets.vanishedmc.settings.GuiHudCOORDSView;
 import com.webmets.vanishedmc.settings.GuiHudCPSView;
+import com.webmets.vanishedmc.utils.effects.EffectMode;
+import com.webmets.vanishedmc.utils.effects.EffectUtils;
 import com.webmets.vanishedmc.utils.ping.PingUtils;
 
 import net.minecraft.client.Minecraft;
@@ -49,6 +51,8 @@ public class FileManager {
 		ModuleAutoGG autoGG = (ModuleAutoGG) client.getModuleManager().getModule(ModuleAutoGG.class);
 		SprintModule sprint = (SprintModule) client.getModuleManager().getModule(SprintModule.class);
 		GuiModule gui = (GuiModule) client.getModuleManager().getModule(GuiModule.class);
+		EffectUtils hudEffectUtils = client.getHudModule().getEffectUtils();
+		EffectUtils keypadEffectUtils = client.getKeypadModule().getEffectUtils();
 
 		try {
 			BufferedReader load;
@@ -103,19 +107,53 @@ public class FileManager {
 						} else if (key2.equalsIgnoreCase("locationY")) {
 							hook.setKeyPadY(elm.getAsInt());
 						}
-					} else if(key.equalsIgnoreCase("modules")) {
+					} else if (key.equalsIgnoreCase("modules")) {
 						if (key2.equalsIgnoreCase("autogg-enabled")) {
 							autoGG.setEnabled(elm.getAsBoolean());
 						} else if (key2.equalsIgnoreCase("autogg-delay")) {
 							autoGG.setDelay(elm.getAsInt());
 						} else if (key2.equalsIgnoreCase("sprint-enabled")) {
-							if(elm.getAsBoolean()) {
+							if (elm.getAsBoolean()) {
 								sprint.enable();
 							}
 						} else if (key2.equalsIgnoreCase("sprint-bind")) {
 							sprint.setBind(elm.getAsInt());
 						} else if (key2.equalsIgnoreCase("gui-bind")) {
 							gui.setBind(elm.getAsInt());
+						}
+					} else if (key.equalsIgnoreCase("effects")) {
+						if (key2.equalsIgnoreCase("hud")) {
+							Iterator<Entry<String, JsonElement>> effectList = elm.getAsJsonObject().entrySet()
+									.iterator();
+							while (effectList.hasNext()) {
+								Entry<String, JsonElement> effectEntry = effectList.next();
+								if (effectEntry.getKey().equalsIgnoreCase("mode")) {
+									hudEffectUtils.setMode(EffectMode
+											.valueOf(effectEntry.getValue().getAsString().replaceAll("\"", "")));
+								} else if (effectEntry.getKey().equalsIgnoreCase("rainbowSpeed")) {
+									hudEffectUtils.loadRainbowSpeed(effectEntry.getValue().getAsFloat());
+								} else if (effectEntry.getKey().equalsIgnoreCase("rainbowSize")) {
+									hudEffectUtils.setRainbowSize(effectEntry.getValue().getAsFloat());
+								} else if (effectEntry.getKey().equalsIgnoreCase("staticColorRGB")) {
+									hudEffectUtils.setStaticColor(effectEntry.getValue().getAsInt());
+								}
+							}
+						} else if (key2.equalsIgnoreCase("keypad")) {
+							Iterator<Entry<String, JsonElement>> effectList = elm.getAsJsonObject().entrySet()
+									.iterator();
+							while (effectList.hasNext()) {
+								Entry<String, JsonElement> effectEntry = effectList.next();
+								if (effectEntry.getKey().equalsIgnoreCase("mode")) {
+									keypadEffectUtils.setMode(EffectMode
+											.valueOf(effectEntry.getValue().getAsString().replaceAll("\"", "")));
+								} else if (effectEntry.getKey().equalsIgnoreCase("rainbowSpeed")) {
+									keypadEffectUtils.loadRainbowSpeed(effectEntry.getValue().getAsFloat());
+								} else if (effectEntry.getKey().equalsIgnoreCase("rainbowSize")) {
+									keypadEffectUtils.setRainbowSize(effectEntry.getValue().getAsFloat());
+								} else if (effectEntry.getKey().equalsIgnoreCase("staticColorRGB")) {
+									keypadEffectUtils.setStaticColor(effectEntry.getValue().getAsInt());
+								}
+							}
 						}
 					}
 				}
@@ -133,7 +171,9 @@ public class FileManager {
 		ModuleAutoGG autoGG = (ModuleAutoGG) client.getModuleManager().getModule(ModuleAutoGG.class);
 		SprintModule sprint = (SprintModule) client.getModuleManager().getModule(SprintModule.class);
 		GuiModule gui = (GuiModule) client.getModuleManager().getModule(GuiModule.class);
-		
+		EffectUtils hudEffectUtils = client.getHudModule().getEffectUtils();
+		EffectUtils keypadEffectUtils = client.getKeypadModule().getEffectUtils();
+
 		try {
 			JsonObject object = new JsonObject();
 			{ // Hud
@@ -162,7 +202,7 @@ public class FileManager {
 				keyPadObject.addProperty("locationY", hook.getKeyPadY());
 				object.add("keypad", keyPadObject);
 			}
-			
+
 			{ // Modules
 				JsonObject modules = new JsonObject();
 				modules.addProperty("autogg-enabled", autoGG.getEnabled());
@@ -171,6 +211,27 @@ public class FileManager {
 				modules.addProperty("sprint-bind", sprint.getBind());
 				modules.addProperty("gui-bind", gui.getBind());
 				object.add("modules", modules);
+			}
+
+			{ // Effects
+				JsonObject effects = new JsonObject();
+				{ // Hud
+					JsonObject hudEffects = new JsonObject();
+					hudEffects.addProperty("mode", hudEffectUtils.getMode().toString());
+					hudEffects.addProperty("rainbowSpeed", hudEffectUtils.getRainbowSpeed());
+					hudEffects.addProperty("rainbowSize", hudEffectUtils.getRainbowSize());
+					hudEffects.addProperty("staticColorRGB", hudEffectUtils.getStaticColor().getRGB());
+					effects.add("hud", hudEffects);
+				}
+				{ // Keypad
+					JsonObject keypadEffects = new JsonObject();
+					keypadEffects.addProperty("mode", keypadEffectUtils.getMode().toString());
+					keypadEffects.addProperty("rainbowSpeed", keypadEffectUtils.getRainbowSpeed());
+					keypadEffects.addProperty("rainbowSize", keypadEffectUtils.getRainbowSize());
+					keypadEffects.addProperty("staticColorRGB", keypadEffectUtils.getStaticColor().getRGB());
+					effects.add("keypad", keypadEffects);
+				}
+				object.add("effects", effects);
 			}
 			PrintWriter save = new PrintWriter(new FileWriter(settingsFile));
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
