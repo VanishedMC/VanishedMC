@@ -1,10 +1,14 @@
 package com.webmets.vanishedmc.gui;
 
+import java.util.List;
+
 import org.lwjgl.opengl.Display;
 
 import com.webmets.vanishedmc.VanishedMC;
 import com.webmets.vanishedmc.gui.settings.Menu;
 import com.webmets.vanishedmc.gui.settings.SettingsGui;
+import com.webmets.vanishedmc.utils.ScoreboardUtils;
+import com.webmets.vanishedmc.utils.Utils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -36,18 +40,17 @@ public class GuiIngameHook extends GuiIngame {
 		}
 		client.getHudModule().render(2, 3);
 		client.getKeypadModule().render(keyPadX, keyPadY); // 122
-
 	}
 
 	public void setKeypadLocation(int x, int y) {
 		this.keyPadX = x;
 		this.keyPadY = y;
 	}
-	
+
 	public void setKeyPadX(int keyPadX) {
 		this.keyPadX = keyPadX;
 	}
-	
+
 	public void setKeyPadY(int keyPadY) {
 		this.keyPadY = keyPadY;
 	}

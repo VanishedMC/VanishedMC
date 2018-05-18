@@ -18,8 +18,10 @@ import com.webmets.vanishedmc.gui.GuiIngameHook;
 import com.webmets.vanishedmc.modules.GuiHudKeypadModule;
 import com.webmets.vanishedmc.modules.GuiHudModule;
 import com.webmets.vanishedmc.modules.GuiModule;
-import com.webmets.vanishedmc.modules.ModuleAutoGG;
 import com.webmets.vanishedmc.modules.SprintModule;
+import com.webmets.vanishedmc.modules.chat.ModuleAutoGG;
+import com.webmets.vanishedmc.modules.chat.ModuleAutoGL;
+import com.webmets.vanishedmc.modules.chat.ModuleAutoWho;
 import com.webmets.vanishedmc.settings.GuiHudCOORDSView;
 import com.webmets.vanishedmc.settings.GuiHudCPSView;
 import com.webmets.vanishedmc.utils.effects.EffectMode;
@@ -30,6 +32,18 @@ import net.minecraft.client.Minecraft;
 
 public class FileManager {
 
+	private VanishedMC client = VanishedMC.instance;
+	private GuiHudModule hud = client.getHudModule();
+	private GuiHudKeypadModule keypad = client.getKeypadModule();
+	private GuiIngameHook hook = (GuiIngameHook) Minecraft.getMinecraft().ingameGUI;
+	private ModuleAutoGG autoGG = (ModuleAutoGG) client.getModuleManager().getModule(ModuleAutoGG.class);
+	private ModuleAutoGL autoGl = (ModuleAutoGL) client.getModuleManager().getModule(ModuleAutoGL.class);
+	private ModuleAutoWho autoWho = (ModuleAutoWho) client.getModuleManager().getModule(ModuleAutoWho.class);
+	private SprintModule sprint = (SprintModule) client.getModuleManager().getModule(SprintModule.class);
+	private GuiModule gui = (GuiModule) client.getModuleManager().getModule(GuiModule.class);
+	private EffectUtils hudEffectUtils = client.getHudModule().getEffectUtils();
+	private EffectUtils keypadEffectUtils = client.getKeypadModule().getEffectUtils();
+	
 	private File clientDir = new File(Minecraft.getMinecraft().mcDataDir, "VanishedMC");
 	private File settingsFile = new File(clientDir, "settings.json");
 
@@ -44,16 +58,6 @@ public class FileManager {
 	}
 
 	private void load() {
-		VanishedMC client = VanishedMC.instance;
-		GuiHudModule hud = client.getHudModule();
-		GuiHudKeypadModule keypad = client.getKeypadModule();
-		GuiIngameHook hook = (GuiIngameHook) Minecraft.getMinecraft().ingameGUI;
-		ModuleAutoGG autoGG = (ModuleAutoGG) client.getModuleManager().getModule(ModuleAutoGG.class);
-		SprintModule sprint = (SprintModule) client.getModuleManager().getModule(SprintModule.class);
-		GuiModule gui = (GuiModule) client.getModuleManager().getModule(GuiModule.class);
-		EffectUtils hudEffectUtils = client.getHudModule().getEffectUtils();
-		EffectUtils keypadEffectUtils = client.getKeypadModule().getEffectUtils();
-
 		try {
 			BufferedReader load;
 			load = new BufferedReader(new FileReader(settingsFile));
@@ -120,6 +124,10 @@ public class FileManager {
 							sprint.setBind(elm.getAsInt());
 						} else if (key2.equalsIgnoreCase("gui-bind")) {
 							gui.setBind(elm.getAsInt());
+						} else if (key2.equalsIgnoreCase("autogl-enabled")) {
+							autoGl.setEnabled(elm.getAsBoolean());
+						} else if (key2.equalsIgnoreCase("autowho-enabled")) {
+							autoWho.setEnabled(elm.getAsBoolean());
 						}
 					} else if (key.equalsIgnoreCase("effects")) {
 						if (key2.equalsIgnoreCase("hud")) {
@@ -164,16 +172,6 @@ public class FileManager {
 	}
 
 	public void saveSettings() {
-		VanishedMC client = VanishedMC.instance;
-		GuiHudModule hud = client.getHudModule();
-		GuiHudKeypadModule keypad = client.getKeypadModule();
-		GuiIngameHook hook = (GuiIngameHook) Minecraft.getMinecraft().ingameGUI;
-		ModuleAutoGG autoGG = (ModuleAutoGG) client.getModuleManager().getModule(ModuleAutoGG.class);
-		SprintModule sprint = (SprintModule) client.getModuleManager().getModule(SprintModule.class);
-		GuiModule gui = (GuiModule) client.getModuleManager().getModule(GuiModule.class);
-		EffectUtils hudEffectUtils = client.getHudModule().getEffectUtils();
-		EffectUtils keypadEffectUtils = client.getKeypadModule().getEffectUtils();
-
 		try {
 			JsonObject object = new JsonObject();
 			{ // Hud
@@ -210,6 +208,8 @@ public class FileManager {
 				modules.addProperty("sprint-enabled", sprint.isEnabled());
 				modules.addProperty("sprint-bind", sprint.getBind());
 				modules.addProperty("gui-bind", gui.getBind());
+				modules.addProperty("autogl-enabled", autoGl.getEnabled());
+				modules.addProperty("autowho-enabled", autoWho.getEnabled());
 				object.add("modules", modules);
 			}
 

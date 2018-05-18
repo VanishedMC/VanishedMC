@@ -3,6 +3,10 @@ package com.webmets.vanishedmc.modules;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.webmets.vanishedmc.modules.chat.ModuleAutoGG;
+import com.webmets.vanishedmc.modules.chat.ModuleAutoGL;
+import com.webmets.vanishedmc.modules.chat.ModuleAutoWho;
+
 public class ModuleManager {
 
 	/**
@@ -17,6 +21,8 @@ public class ModuleManager {
 		modules.add(new GuiModule());
 		modules.add(new SprintModule());
 		modules.add(new ModuleAutoGG());
+		modules.add(new ModuleAutoGL());
+		modules.add(new ModuleAutoWho());
 	}
 
 	public List<Module> getModules() {

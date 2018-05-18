@@ -5,6 +5,7 @@ import java.util.Date;
 
 import org.lwjgl.opengl.Display;
 
+import com.webmets.vanishedmc.controllers.ChatController;
 import com.webmets.vanishedmc.controllers.KeyboardController;
 import com.webmets.vanishedmc.controllers.MouseController;
 import com.webmets.vanishedmc.files.FileManager;
@@ -23,7 +24,7 @@ public class VanishedMC {
 	 */
 
 	// Variables
-	private final float version = 0.2f;
+	private final float version = 0.3f;
 	private boolean updateAvailable = false;
 	
 	private UpdateChecker updateChecker = new UpdateChecker();
@@ -31,11 +32,12 @@ public class VanishedMC {
 	
 	private KeyboardController keyboardController;
 	private MouseController mouseController;
+	private ChatController chatController;
 	
 	private ModuleManager moduleManager;
 	private GuiHudModule hudModule;
 	private GuiHudKeypadModule keypadModule;
-
+	
 	private FileManager fileManager;
 	
 	// Constructor
@@ -43,12 +45,13 @@ public class VanishedMC {
 		Display.setTitle("VanishedMC Client (v" + version + ")");
 		basicSettings = new BasicSettings();
 
-		keyboardController = new KeyboardController();
-		mouseController = new MouseController();
-
 		moduleManager = new ModuleManager();
 		hudModule = new GuiHudModule();
 		keypadModule = new GuiHudKeypadModule();
+		
+		keyboardController = new KeyboardController();
+		mouseController = new MouseController();
+		chatController = new ChatController();
 		
 		fileManager = new FileManager();
 		// Used to automate login without storing password in the code
@@ -61,6 +64,10 @@ public class VanishedMC {
 	// Getters and setters
 	public FileManager getFileManager() {
 		return fileManager;
+	}
+	
+	public ChatController getChatController() {
+		return chatController;
 	}
 	
 	public UpdateChecker getUpdateChecker() {
