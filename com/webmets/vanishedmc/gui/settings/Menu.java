@@ -99,7 +99,7 @@ public class Menu extends GuiScreen {
 	@Override
 	public void onGuiClosed() {
 		super.onGuiClosed();
-		client.getFileManager().saveSettings();
+		client.getSettingsManager().saveSettings();
 	}
 	
 	protected void drawBorderedRect(int x, int y, int x1, int y1, int size, int borderC, int insideC) {

@@ -4,14 +4,16 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
+import com.google.gson.JsonObject;
 import com.webmets.vanishedmc.VanishedMC;
 import com.webmets.vanishedmc.gui.GuiIngameHook;
+import com.webmets.vanishedmc.gui.settings.Configurable;
 import com.webmets.vanishedmc.utils.effects.EffectUtils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 
-public class GuiKeypadModule {
+public class GuiKeypadModule implements Configurable{
 
 	// Variables
 	private Minecraft mc = Minecraft.getMinecraft();
@@ -274,5 +276,42 @@ public class GuiKeypadModule {
 
 	public void drawCenteredString(String text, float f, float y, int color) {
 		fr.func_175063_a(text, (float) (f - fr.getStringWidth(text) / 2), (float) y, color);
+	}
+	
+	@Override
+	public String getKey(){
+		return "keypad";
+	}
+	
+	@Override
+	public JsonObject getSettings(){
+		GuiIngameHook hook = (GuiIngameHook) mc.ingameGUI;
+		JsonObject keypad = new JsonObject();
+		keypad.addProperty("mouseButtons", isShowMouseButtons());
+		keypad.addProperty("cps", isShowCps());
+		keypad.addProperty("cpsInLine", isCpsInLine());
+		keypad.addProperty("buttonScale", getSize());
+		keypad.addProperty("textScale", getScale());
+		keypad.addProperty("spacebar", isSpaceBar());
+		keypad.addProperty("distance", getDistanceBetween());
+		keypad.addProperty("locationX", hook.getKeyPadX());
+		keypad.addProperty("locationY", hook.getKeyPadY());
+		keypad.add(effect.getKey(), effect.getSettings());
+		return keypad;
+	}
+	
+	@Override
+	public void loadSettings(JsonObject json) {
+		GuiIngameHook hook = (GuiIngameHook) mc.ingameGUI;
+		setShowMouseButtons(json.get("mouseButtons").getAsBoolean());
+		setShowCps(json.get("cps").getAsBoolean());
+		setCpsInLine(json.get("cpsInLine").getAsBoolean());
+		setSize(json.get("buttonScale").getAsInt());
+		setScale(json.get("textScale").getAsFloat());
+		setSpaceBar(json.get("spacebar").getAsBoolean());
+		setDistanceBetween(json.get("distance").getAsInt());
+		hook.setKeyPadX(json.get("locationX").getAsInt());
+		hook.setKeyPadY(json.get("locationY").getAsInt());
+		effect.loadSettings(json.get(effect.getKey()).getAsJsonObject());
 	}
 }

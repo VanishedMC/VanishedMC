@@ -26,7 +26,7 @@ import net.minecraft.util.IChatComponent;
 public class PingUtils {
 
 	private static long nextUpdate = 0;
-	private static int delay = 1000;
+	private static int delay = 5000;
 
 	public static int getDelay() {
 		return delay;

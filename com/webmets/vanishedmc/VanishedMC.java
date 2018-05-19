@@ -8,10 +8,10 @@ import org.lwjgl.opengl.Display;
 import com.webmets.vanishedmc.controllers.ChatController;
 import com.webmets.vanishedmc.controllers.KeyboardController;
 import com.webmets.vanishedmc.controllers.MouseController;
-import com.webmets.vanishedmc.files.FileManager;
+import com.webmets.vanishedmc.files.SettingsManager;
 import com.webmets.vanishedmc.modules.GuiArmorModule;
-import com.webmets.vanishedmc.modules.GuiKeypadModule;
 import com.webmets.vanishedmc.modules.GuiHudModule;
+import com.webmets.vanishedmc.modules.GuiKeypadModule;
 import com.webmets.vanishedmc.modules.ModuleManager;
 import com.webmets.vanishedmc.settings.BasicSettings;
 import com.webmets.vanishedmc.siteconnection.UpdateChecker;
@@ -25,7 +25,7 @@ public class VanishedMC {
 	 */
 
 	// Variables
-	private final float version = 0.3f;
+	private final float version = 0.4f;
 	private boolean updateAvailable = false;
 	
 	private UpdateChecker updateChecker = new UpdateChecker();
@@ -40,7 +40,7 @@ public class VanishedMC {
 	private GuiKeypadModule keypadModule;
 	private GuiArmorModule armorModule;
 	
-	private FileManager fileManager;
+	private SettingsManager settingsManager;
 	
 	// Constructor
 	public void start() {
@@ -56,7 +56,7 @@ public class VanishedMC {
 		mouseController = new MouseController();
 		chatController = new ChatController();
 		
-		fileManager = new FileManager();
+		settingsManager = new SettingsManager();
 		// Used to automate login without storing password in the code
 		if(!AccountUtils.login.equalsIgnoreCase("null")) {
 			AccountUtils.login(AccountUtils.login);
@@ -65,8 +65,8 @@ public class VanishedMC {
 	}
 
 	// Getters and setters
-	public FileManager getFileManager() {
-		return fileManager;
+	public SettingsManager getSettingsManager() {
+		return settingsManager;
 	}
 	
 	public GuiArmorModule getArmorModule() {

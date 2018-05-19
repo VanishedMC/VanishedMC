@@ -3,8 +3,10 @@ package com.webmets.vanishedmc.modules;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.JsonObject;
 import com.webmets.vanishedmc.VanishedMC;
 import com.webmets.vanishedmc.controllers.MouseController;
+import com.webmets.vanishedmc.gui.settings.Configurable;
 import com.webmets.vanishedmc.settings.GuiHudCOORDSView;
 import com.webmets.vanishedmc.settings.GuiHudCPSView;
 import com.webmets.vanishedmc.utils.effects.EffectUtils;
@@ -13,7 +15,7 @@ import com.webmets.vanishedmc.utils.ping.PingUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 
-public class GuiHudModule {
+public class GuiHudModule implements Configurable {
 
 	/**
 	 * The main HUD module, showing FPS,CPS, and similair game stats
@@ -35,12 +37,12 @@ public class GuiHudModule {
 	private boolean isLowerCase = false;
 	private GuiHudCPSView cpsView = GuiHudCPSView.SEPARATE;
 	private GuiHudCOORDSView coordsView = GuiHudCOORDSView.COMPACT;
-	
+
 	// Constructor
 	public GuiHudModule() {
 		effects = new EffectUtils();
 	}
-	
+
 	public void render(int x, int y) {
 		List<String> toRender = new ArrayList<>();
 		int offset = 0;
@@ -95,14 +97,14 @@ public class GuiHudModule {
 			PingUtils.ping();
 			toRender.add("Ping " + PingUtils.serverPing + "ms");
 		}
-		
+
 		SprintModule sprint = (SprintModule) client.getModuleManager().getModule(SprintModule.class);
-		if(sprint.isEnabled()) {
+		if (sprint.isEnabled()) {
 			toRender.add("Sprint");
 		}
-		
+
 		for (String s : toRender) {
-			if(isLowerCase()) {
+			if (isLowerCase()) {
 				fr.drawString(s.replace("&", "§").toLowerCase(), x, y + offset, effects.getColorForY(y, offset));
 			} else {
 				fr.drawString(s.replace("&", "§"), x, y + offset, effects.getColorForY(y, offset));
@@ -140,11 +142,11 @@ public class GuiHudModule {
 	public GuiHudCOORDSView getCoordsView() {
 		return coordsView;
 	}
-	
+
 	public boolean isLowerCase() {
 		return isLowerCase;
 	}
-	
+
 	public EffectUtils getEffectUtils() {
 		return effects;
 	}
@@ -153,7 +155,7 @@ public class GuiHudModule {
 	public void setCpsView(GuiHudCPSView cpsView) {
 		this.cpsView = cpsView;
 	}
-	
+
 	public void setLowerCase(boolean isLowerCase) {
 		this.isLowerCase = isLowerCase;
 	}
@@ -180,5 +182,38 @@ public class GuiHudModule {
 
 	public void setShowPING(boolean showPING) {
 		this.showPING = showPING;
+	}
+
+	@Override
+	public String getKey() {
+		return "hud";
+	}
+
+	@Override
+	public JsonObject getSettings() {
+		JsonObject hud = new JsonObject();
+		hud.addProperty("fps", isShowFPS());
+		hud.addProperty("cps", isShowCPS());
+		hud.addProperty("cpsView", getCpsView().toString());
+		hud.addProperty("coords", isShowCOORDS());
+		hud.addProperty("coordsOneLine", isCoordsOneLine());
+		hud.addProperty("coordsView", getCoordsView().toString());
+		hud.addProperty("ping", isShowPING());
+		hud.addProperty("pingDelay", PingUtils.getDelay());
+		hud.add(effects.getKey(), effects.getSettings());
+		return hud;
+	}
+
+	@Override
+	public void loadSettings(JsonObject json) {
+		setShowFPS(json.get("fps").getAsBoolean());
+		setShowCPS(json.get("cps").getAsBoolean());
+		setCpsView(GuiHudCPSView.valueOf(json.get("cpsView").getAsString()));
+		setShowCOORDS(json.get("coords").getAsBoolean());
+		setCoordsOneLine(json.get("coordsOneLine").getAsBoolean());
+		setCoordsView(GuiHudCOORDSView.valueOf(json.get("coordsView").getAsString()));
+		setShowPING(json.get("ping").getAsBoolean());
+		PingUtils.setDelay(json.get("pingDelay").getAsInt());
+		effects.loadSettings(json.get(effects.getKey()).getAsJsonObject());
 	}
 }

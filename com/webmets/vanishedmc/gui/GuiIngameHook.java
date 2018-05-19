@@ -42,7 +42,7 @@ public class GuiIngameHook extends GuiIngame {
 
 		client.getHudModule().render(2, 3);
 		client.getKeypadModule().render(keyPadX, keyPadY);
-		client.getArmorModule().render(0, 0);
+		client.getArmorModule().render();
 
 	}
 

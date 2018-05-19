@@ -2,7 +2,10 @@ package com.webmets.vanishedmc.utils.effects;
 
 import java.awt.Color;
 
-public class EffectUtils {
+import com.google.gson.JsonObject;
+import com.webmets.vanishedmc.gui.settings.Configurable;
+
+public class EffectUtils implements Configurable {
 
 	private float rainbowSpeed = 1000.0f;
 	private float rainbowSize = 3f;
@@ -76,5 +79,28 @@ public class EffectUtils {
 	
 	public void loadRainbowSpeed(float rainbowSpeed) {
 		this.rainbowSpeed = rainbowSpeed;
+	}
+	
+	@Override
+	public String getKey(){
+		return "effects";
+	}
+	
+	@Override
+	public JsonObject getSettings(){
+		JsonObject effects = new JsonObject();
+		effects.addProperty("mode", getMode().toString());
+		effects.addProperty("rainbowSpeed", getRainbowSpeed());
+		effects.addProperty("rainbowSize", getRainbowSize());
+		effects.addProperty("staticColorRGB", getStaticColor().getRGB());
+		return effects;
+	}
+	
+	@Override
+	public void loadSettings(JsonObject json) {
+		setMode(EffectMode.valueOf(json.get("mode").getAsString()));
+		setRainbowSpeed(json.get("rainbowSpeed").getAsFloat());
+		setRainbowSize(json.get("rainbowSize").getAsFloat());
+		setStaticColor(json.get("staticColorRGB").getAsInt());
 	}
 }

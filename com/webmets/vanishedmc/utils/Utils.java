@@ -2,6 +2,8 @@ package com.webmets.vanishedmc.utils;
 
 import java.util.List;
 
+import javax.vecmath.Vector2f;
+
 import org.lwjgl.Sys;
 
 import net.minecraft.client.Minecraft;
@@ -33,6 +35,26 @@ public class Utils {
 		}
 
 		return timeSinceLast;
+	}
+	
+	/**
+	 * Serliaze a Vector2f into a String
+	 * @return
+	 * String
+	 * */
+	public static String serializeVector(Vector2f vector2f) {
+		return String.valueOf(vector2f.x + "-" + vector2f.y);
+	}
+	
+	/**
+	 * Serliaze a String into a Vector2f
+	 * @return
+	 * Vector2f
+	 * */
+	public static Vector2f deSerializeVector(String vector2f) {
+		float x = Float.parseFloat(vector2f.split("-")[0]);
+		float y= Float.parseFloat(vector2f.split("-")[1]);
+		return new Vector2f(x, y);
 	}
 
 	/**
