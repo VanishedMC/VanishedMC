@@ -9,6 +9,7 @@ import com.webmets.vanishedmc.controllers.ChatController;
 import com.webmets.vanishedmc.controllers.KeyboardController;
 import com.webmets.vanishedmc.controllers.MouseController;
 import com.webmets.vanishedmc.files.FileManager;
+import com.webmets.vanishedmc.modules.GuiHudArmorModule;
 import com.webmets.vanishedmc.modules.GuiHudKeypadModule;
 import com.webmets.vanishedmc.modules.GuiHudModule;
 import com.webmets.vanishedmc.modules.ModuleManager;
@@ -37,6 +38,7 @@ public class VanishedMC {
 	private ModuleManager moduleManager;
 	private GuiHudModule hudModule;
 	private GuiHudKeypadModule keypadModule;
+	private GuiHudArmorModule armorModule;
 	
 	private FileManager fileManager;
 	
@@ -48,6 +50,7 @@ public class VanishedMC {
 		moduleManager = new ModuleManager();
 		hudModule = new GuiHudModule();
 		keypadModule = new GuiHudKeypadModule();
+		armorModule = new GuiHudArmorModule();
 		
 		keyboardController = new KeyboardController();
 		mouseController = new MouseController();
@@ -64,6 +67,10 @@ public class VanishedMC {
 	// Getters and setters
 	public FileManager getFileManager() {
 		return fileManager;
+	}
+	
+	public GuiHudArmorModule getArmorModule() {
+		return armorModule;
 	}
 	
 	public ChatController getChatController() {
