@@ -11,7 +11,7 @@ import net.minecraft.util.EnumChatFormatting;
 public class ModuleAutoGL extends ChatTriggeredModule{
 
 	public ModuleAutoGL() {
-		super(Arrays.asList("The game starts in 1 second!"), Arrays.asList("glhf"));
+		super(Arrays.asList("The game starts in 1 second!"), Arrays.asList("/achat glhf"));
 		setDelay(100);
 	}
 	

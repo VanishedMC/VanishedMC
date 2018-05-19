@@ -14,7 +14,7 @@ import net.minecraft.util.EnumChatFormatting;
 public class ModuleAutoGG extends ChatTriggeredModule {
 
 	public ModuleAutoGG() {
-		super(GetAutoGGTriggers.getTriggers(), Arrays.asList("gg"));
+		super(GetAutoGGTriggers.getTriggers(), Arrays.asList("/achat gg"));
 	}
 
 	@Override
