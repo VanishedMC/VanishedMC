@@ -7,7 +7,7 @@ import com.webmets.vanishedmc.gui.buttons.ButtonAction;
 import com.webmets.vanishedmc.gui.buttons.SliderButton;
 import com.webmets.vanishedmc.gui.buttons.ToggleButton;
 import com.webmets.vanishedmc.gui.settings.Menu;
-import com.webmets.vanishedmc.modules.GuiHudKeypadModule;
+import com.webmets.vanishedmc.modules.GuiKeypadModule;
 
 import net.minecraft.client.gui.GuiButton;
 
@@ -16,7 +16,7 @@ public class MenuKeypad extends Menu {
 	@Override
 	public void initGui() {
 		// Variables
-		final GuiHudKeypadModule keyPad = client.getKeypadModule();
+		final GuiKeypadModule keyPad = client.getKeypadModule();
 		super.initGui();
 		((ToggleButton) buttonList.get(1)).setToggled(true);
 

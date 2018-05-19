@@ -15,7 +15,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.webmets.vanishedmc.VanishedMC;
 import com.webmets.vanishedmc.gui.GuiIngameHook;
-import com.webmets.vanishedmc.modules.GuiHudKeypadModule;
+import com.webmets.vanishedmc.modules.GuiKeypadModule;
 import com.webmets.vanishedmc.modules.GuiHudModule;
 import com.webmets.vanishedmc.modules.GuiModule;
 import com.webmets.vanishedmc.modules.SprintModule;
@@ -34,7 +34,7 @@ public class FileManager {
 
 	private VanishedMC client = VanishedMC.instance;
 	private GuiHudModule hud = client.getHudModule();
-	private GuiHudKeypadModule keypad = client.getKeypadModule();
+	private GuiKeypadModule keypad = client.getKeypadModule();
 	private GuiIngameHook hook = (GuiIngameHook) Minecraft.getMinecraft().ingameGUI;
 	private ModuleAutoGG autoGG = (ModuleAutoGG) client.getModuleManager().getModule(ModuleAutoGG.class);
 	private ModuleAutoGL autoGl = (ModuleAutoGL) client.getModuleManager().getModule(ModuleAutoGL.class);

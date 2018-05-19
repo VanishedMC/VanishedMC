@@ -9,8 +9,8 @@ import com.webmets.vanishedmc.controllers.ChatController;
 import com.webmets.vanishedmc.controllers.KeyboardController;
 import com.webmets.vanishedmc.controllers.MouseController;
 import com.webmets.vanishedmc.files.FileManager;
-import com.webmets.vanishedmc.modules.GuiHudArmorModule;
-import com.webmets.vanishedmc.modules.GuiHudKeypadModule;
+import com.webmets.vanishedmc.modules.GuiArmorModule;
+import com.webmets.vanishedmc.modules.GuiKeypadModule;
 import com.webmets.vanishedmc.modules.GuiHudModule;
 import com.webmets.vanishedmc.modules.ModuleManager;
 import com.webmets.vanishedmc.settings.BasicSettings;
@@ -37,8 +37,8 @@ public class VanishedMC {
 	
 	private ModuleManager moduleManager;
 	private GuiHudModule hudModule;
-	private GuiHudKeypadModule keypadModule;
-	private GuiHudArmorModule armorModule;
+	private GuiKeypadModule keypadModule;
+	private GuiArmorModule armorModule;
 	
 	private FileManager fileManager;
 	
@@ -49,8 +49,8 @@ public class VanishedMC {
 
 		moduleManager = new ModuleManager();
 		hudModule = new GuiHudModule();
-		keypadModule = new GuiHudKeypadModule();
-		armorModule = new GuiHudArmorModule();
+		keypadModule = new GuiKeypadModule();
+		armorModule = new GuiArmorModule();
 		
 		keyboardController = new KeyboardController();
 		mouseController = new MouseController();
@@ -69,7 +69,7 @@ public class VanishedMC {
 		return fileManager;
 	}
 	
-	public GuiHudArmorModule getArmorModule() {
+	public GuiArmorModule getArmorModule() {
 		return armorModule;
 	}
 	
@@ -81,7 +81,7 @@ public class VanishedMC {
 		return updateChecker;
 	}
 
-	public GuiHudKeypadModule getKeypadModule() {
+	public GuiKeypadModule getKeypadModule() {
 		return keypadModule;
 	}
 	

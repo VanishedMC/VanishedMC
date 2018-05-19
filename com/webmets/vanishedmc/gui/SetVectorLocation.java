@@ -2,40 +2,46 @@ package com.webmets.vanishedmc.gui;
 
 import java.io.IOException;
 
+import javax.vecmath.Vector2f;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
-
-import com.webmets.vanishedmc.VanishedMC;
-import com.webmets.vanishedmc.modules.GuiKeypadModule;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 
-public class SetKeypadLocation extends GuiScreen {
+public class SetVectorLocation extends GuiScreen{
 
+	private Vector2f vec;
+	
+	public SetVectorLocation(Vector2f vector2f){
+		this.vec = vector2f;
+	}
+	
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
 		super.mouseClicked(mouseX, mouseY, mouseButton);
-		((GuiIngameHook) Minecraft.getMinecraft().ingameGUI).setKeypadLocation(mouseX, mouseY);
+		vec.setX(mouseX);
+		vec.setY(mouseY);
 	}
 
 	@Override
 	protected void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick) {
 		super.mouseClickMove(mouseX, mouseY, clickedMouseButton, timeSinceLastClick);
-		((GuiIngameHook) Minecraft.getMinecraft().ingameGUI).setKeypadLocation(mouseX, mouseY);
-	}
+		vec.setX(mouseX);
+		vec.setY(mouseY);
+ 	}
 
 	protected void keyTyped(char c, int i) throws IOException {
 		super.keyTyped(c, i);
-		GuiIngameHook hook = (GuiIngameHook) Minecraft.getMinecraft().ingameGUI;
 		if (i == 200) {
-			hook.setKeypadLocation(hook.getKeyPadX(), hook.getKeyPadY() - 1);
+			vec.setY(vec.getY()-1);
 		} else if (i == 203) {
-			hook.setKeypadLocation(hook.getKeyPadX() - 1, hook.getKeyPadY());
+			vec.setX(vec.getX()-1);
 		} else if (i == 208) {
-			hook.setKeypadLocation(hook.getKeyPadX(), hook.getKeyPadY() + 1);
+			vec.setY(vec.getY()+1);
 		} else if (i == 205) {
-			hook.setKeypadLocation(hook.getKeyPadX() + 1, hook.getKeyPadY());
+			vec.setX(vec.getX()+1);
 		}
 	}
 
@@ -57,4 +63,5 @@ public class SetKeypadLocation extends GuiScreen {
 		Keyboard.enableRepeatEvents(false);
 	}
 
+	
 }

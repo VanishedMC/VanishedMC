@@ -11,7 +11,7 @@ import com.webmets.vanishedmc.utils.effects.EffectUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 
-public class GuiHudKeypadModule {
+public class GuiKeypadModule {
 
 	// Variables
 	private Minecraft mc = Minecraft.getMinecraft();
@@ -31,7 +31,7 @@ public class GuiHudKeypadModule {
 	private int keyReleasedColor = 0xaa1c1a1a;
 
 	// Constructor
-	public GuiHudKeypadModule() {
+	public GuiKeypadModule() {
 		effect = new EffectUtils();
 	}
 	
