@@ -19,7 +19,7 @@ public class Utils {
 	private static long timeSinceLast;
 	private static long lastFrame;
 
-	public static float getTimeSinceLast() {
+	private static float getTimeSinceLast() {
 		if (first) {
 			currentFrame = getTime();
 			first = false;
@@ -35,14 +35,26 @@ public class Utils {
 		return timeSinceLast;
 	}
 
+	/**
+	 * Get the frametime since last update
+	 * */
 	public static float getFrameTime() {
 		return timeSinceLast * 1f;
 	}
 
+	/**
+	 * Update the main animation clock
+	 * */
 	public static void updateClock() {
 		getTimeSinceLast();
 	}
 
+	/** 
+	 * Method to detect if user is in a game of ranked skywars
+	 * 
+	 * @return
+	 * true only if playing ranked skywars on Hypixel
+	 * */
 	public static boolean playingRankedSkywars() {
 		Boolean ranked = null;
 		List<String> scoreboard = ScoreboardUtils.getScoreboardContent();
@@ -56,6 +68,13 @@ public class Utils {
 		return false;
 	}
 
+	/**
+	 * Method to detect if a user is in a normal game of ranked skywars
+	 * 
+	 * @return
+	 * true if playing skywars on Hypixel </br>
+	 * will also return true for ranked or experimental modes
+	 * */
 	public static boolean playingSkywars() {
 		boolean onSkywars = false;
 		boolean inLobby = false;
@@ -74,6 +93,12 @@ public class Utils {
 		return onSkywars && !inLobby;
 	}
 
+	/**
+	 * Method to detect if a user is on Hypixel
+	 * 
+	 * @return
+	 * true if connected to the hypixel network
+	 * */
 	public static boolean onHypixel() {
 		ServerData server = Minecraft.getMinecraft().getCurrentServerData();
 		if (server == null) {

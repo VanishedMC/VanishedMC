@@ -16,13 +16,18 @@ public class UpdateChecker {
 	/**
 	 * The update checker, grabs a direct string from http://files.vanishedmc.com/clientdata.php, parses the JSON with the GSON library
 	 * */
-	
 	public void init() {
 		boolean update = isUpdateAvailable();
 		VanishedMC.log("Initializing update checker.. " + (update ? "update found" : "no update found"));
 		VanishedMC.instance.setUpdateAvailable(update);
 	}
 
+	/**
+	 * Method to check if an update for the client is available
+	 * 
+	 * @return
+	 * true if an update was found
+	 * */
 	public boolean isUpdateAvailable() {
 		try {
 			JsonObject json = (JsonObject) JsonUtils.jsonParser.parse(grabData());

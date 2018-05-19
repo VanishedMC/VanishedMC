@@ -4,10 +4,6 @@ import java.awt.Color;
 
 public class EffectUtils {
 
-	public EffectUtils() {
-
-	}
-
 	private float rainbowSpeed = 1000.0f;
 	private float rainbowSize = 3f;
 	private EffectMode mode = EffectMode.RAINBOW;
@@ -17,6 +13,13 @@ public class EffectUtils {
 		return Color.HSBtoRGB(1 + (System.currentTimeMillis() % (int) rainbowSpeed / rainbowSpeed) + offset, 1f, 1);
 	}
 
+	/**
+	 * Method to get color value for any Y level, depending on current mode and settings
+	 * 
+	 * @return
+	 * The color value for given Y and offset
+	 * 
+	 * */
 	public int getColorForY(int y, float offset) {
 		switch (mode) {
 		case RAINBOW:

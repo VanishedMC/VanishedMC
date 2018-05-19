@@ -12,6 +12,16 @@ public class AutoMessageThread implements Runnable{
 	private List<String> messages;
 	private ChatTriggeredModule holder;
 	
+	/**
+	 * Thread to send delayed messages
+	 * 
+	 * @param
+	 * ChatTriggeredModule holder 
+	 * @param
+	 * List messages
+	 * @param
+	 * Integer delay
+	 * */
 	public AutoMessageThread(ChatTriggeredModule holder, List<String> messages, int delay){
 		this.delay = delay;
 		this.messages = messages;

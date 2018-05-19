@@ -12,7 +12,6 @@ public class ModuleManager {
 	/**
 	 * Module manager, basic ArrayList with all the modules, and methods to get them.
 	 * */
-	
 	private List<Module> modules;
 
 	public ModuleManager() {

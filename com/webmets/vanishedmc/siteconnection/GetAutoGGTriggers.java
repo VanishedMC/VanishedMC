@@ -13,6 +13,12 @@ import com.webmets.vanishedmc.utils.JsonUtils;
 
 public class GetAutoGGTriggers {
 
+	/**
+	 * Method to get a list of triggers for the AutoGG module
+	 * 
+	 * @return
+	 * List of triggers
+	 * */
 	public static List<String> getTriggers(){
 		List<String> result = new ArrayList<String>();
 		JsonObject object = (JsonObject) JsonUtils.jsonParser.parse(grabData());

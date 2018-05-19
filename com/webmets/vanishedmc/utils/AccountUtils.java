@@ -15,6 +15,10 @@ public class AccountUtils {
 
 	public static String login = "null";
 	
+	/**
+	 * Method to change Minecraft account ingame </br> </br>
+	 * This method is only used during development, and can not be triggered when the client is compiled
+	 * */
 	public static String login(String login) {
 		YggdrasilAuthenticationService authenticationService = new YggdrasilAuthenticationService(Proxy.NO_PROXY, "");
 		YggdrasilUserAuthentication authentication = (YggdrasilUserAuthentication) authenticationService

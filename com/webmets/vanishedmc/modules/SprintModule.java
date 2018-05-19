@@ -8,6 +8,9 @@ public class SprintModule extends Module {
 		super("Sprint", Keyboard.KEY_Z);
 	}
 
+	/**
+	 * Sprint module, keep the player sprinting only when possible
+	 * */
 	@Override
 	public void tick() {
 		if(this.isEnabled()) {

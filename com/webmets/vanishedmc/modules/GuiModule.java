@@ -21,6 +21,9 @@ public class GuiModule extends Module{
 		
 	}
 
+	/**
+	 * Module to open the main GUI if set keybind is pressed (default to right shift)
+	 * */
 	@Override
 	public void onEnable() {
 		this.mc.displayGuiScreen(new SettingsGui());

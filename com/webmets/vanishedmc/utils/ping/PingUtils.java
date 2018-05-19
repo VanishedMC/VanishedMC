@@ -38,6 +38,9 @@ public class PingUtils {
 
 	public static int serverPing = 0;
 
+	/**
+	 * Method used to determine ping to current server. Base minecraft code from OldServerPinger.java
+	 * */
 	public static void ping() {
 		if (System.currentTimeMillis() < nextUpdate) {
 			return;

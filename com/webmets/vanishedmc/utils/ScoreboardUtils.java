@@ -17,6 +17,14 @@ import net.minecraft.scoreboard.Scoreboard;
 
 public class ScoreboardUtils {
 
+	/**
+	 * Method used to get all the content on the current scoreboard
+	 * Not very accurate, enough to scrape nessecary data
+	 * 
+	 * @return
+	 * String List of scoreboard lines with title included</br>
+	 * null if there is no current scoreboard
+	 * */
 	public static List<String> getScoreboardContent() {
 		List<String> result = new ArrayList<>();
 		Minecraft mc = Minecraft.getMinecraft();
