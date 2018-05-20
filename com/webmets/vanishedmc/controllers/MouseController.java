@@ -4,12 +4,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.lwjgl.input.Mouse;
+
+import com.webmets.vanishedmc.VanishedMC;
+import com.webmets.vanishedmc.gui.ChatGui;
 import com.webmets.vanishedmc.settings.GuiHudCPSView;
+
+import net.minecraft.client.Minecraft;
 
 public class MouseController {
 
 	private List<Long> leftClicks, rightClicks;
-
+	private VanishedMC client = VanishedMC.instance;
+	
 	public MouseController() {
 		leftClicks = new ArrayList<>();
 		rightClicks = new ArrayList<>();

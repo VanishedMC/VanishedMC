@@ -112,7 +112,7 @@ public class CustomMainMenu extends GuiMainMenu {
 		GlStateManager.enableAlpha();
 		Tessellator var4 = Tessellator.getInstance();
 		WorldRenderer var5 = var4.getWorldRenderer();
-		short var6 = 274;
+		short var6 = 128+64;
 		int var7 = this.width / 2 - var6 / 2;
 		byte var8 = 70;
 		this.drawGradientRect(0, 0, this.width, this.height / 2, -2130706433, 16777215);
