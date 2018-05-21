@@ -10,6 +10,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.webmets.vanishedmc.VanishedMC;
 import com.webmets.vanishedmc.utils.JsonUtils;
+import com.webmets.vanishedmc.utils.Utils;
 
 public class UpdateChecker {
 
@@ -30,7 +31,7 @@ public class UpdateChecker {
 	 * */
 	public boolean isUpdateAvailable() {
 		try {
-			JsonObject json = (JsonObject) JsonUtils.jsonParser.parse(grabData());
+			JsonObject json = (JsonObject) JsonUtils.jsonParser.parse(Utils.grabData("http://files.vanishedmc.com/clientdata.php"));
 			Iterator<Entry<String, JsonElement>> itr = json.entrySet().iterator();
 
 			while (itr.hasNext()) {
@@ -50,24 +51,5 @@ public class UpdateChecker {
 		return false;
 	}
 
-	private String grabData() {
-		try {
-			URL url = new URL("http://files.vanishedmc.com/clientdata.php");
-			URLConnection connection = url.openConnection();
-			connection.setRequestProperty("User-Agent",
-					"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36");
-
-			BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			String code = "", line = "";
-
-			while ((line = br.readLine()) != null) {
-				code = code + line;
-			}
-			
-			return code;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return "error";
-		}
-	}
+	
 }

@@ -3,8 +3,11 @@ package com.webmets.vanishedmc;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
 
+import com.webmets.vanishedmc.chat.ChatManager;
 import com.webmets.vanishedmc.controllers.ChatController;
 import com.webmets.vanishedmc.controllers.KeyboardController;
 import com.webmets.vanishedmc.controllers.MouseController;
@@ -27,6 +30,7 @@ public class VanishedMC {
 	// Variables
 	private final float version = 0.4f;
 	private boolean updateAvailable = false;
+	public static boolean DEBUGMODE = false;
 	
 	private UpdateChecker updateChecker = new UpdateChecker();
 	private BasicSettings basicSettings;
@@ -39,6 +43,7 @@ public class VanishedMC {
 	private GuiHudModule hudModule;
 	private GuiKeypadModule keypadModule;
 	private GuiArmorModule armorModule;
+	private ChatManager chatManager;
 	
 	private SettingsManager settingsManager;
 	
@@ -51,6 +56,7 @@ public class VanishedMC {
 		hudModule = new GuiHudModule();
 		keypadModule = new GuiKeypadModule();
 		armorModule = new GuiArmorModule();
+		chatManager = new ChatManager();
 		
 		keyboardController = new KeyboardController();
 		mouseController = new MouseController();
@@ -61,12 +67,17 @@ public class VanishedMC {
 		if(!AccountUtils.login.equalsIgnoreCase("null")) {
 			AccountUtils.login(AccountUtils.login);
 			AccountUtils.login = "null";
+			DEBUGMODE = true;
 		}
 	}
 
 	// Getters and setters
 	public SettingsManager getSettingsManager() {
 		return settingsManager;
+	}
+	
+	public ChatManager getChatManager() {
+		return chatManager;
 	}
 	
 	public GuiArmorModule getArmorModule() {

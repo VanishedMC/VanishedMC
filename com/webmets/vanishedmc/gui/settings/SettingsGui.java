@@ -6,7 +6,6 @@ import java.io.IOException;
 import org.lwjgl.opengl.Display;
 
 import com.webmets.vanishedmc.gui.buttons.ButtonAction;
-import com.webmets.vanishedmc.gui.buttons.CustomButton;
 import com.webmets.vanishedmc.gui.buttons.ToggleButton;
 import com.webmets.vanishedmc.gui.settings.menu.MenuArmorHud;
 import com.webmets.vanishedmc.gui.settings.menu.MenuEffect;
@@ -14,6 +13,7 @@ import com.webmets.vanishedmc.gui.settings.menu.MenuHud;
 import com.webmets.vanishedmc.gui.settings.menu.MenuKeypad;
 import com.webmets.vanishedmc.gui.settings.menu.MenuModules;
 import com.webmets.vanishedmc.gui.settings.menu.MenuPotionHud;
+import com.webmets.vanishedmc.gui.settings.menu.chat.MenuChat;
 import com.webmets.vanishedmc.utils.Utils;
 
 import net.minecraft.client.Minecraft;
@@ -54,48 +54,64 @@ public class SettingsGui extends GuiScreen {
 		ToggleButton potionhud = new ToggleButton(3, 30, 105, 100, 20, "Potion Hud");
 		ToggleButton effects = new ToggleButton(4, 30, 130, 100, 20, "Effects");
 		ToggleButton modules = new ToggleButton(5, 30, 155, 100, 20, "Modules");
+		ToggleButton chat = new ToggleButton(5, 30, 180, 100, 20, "Chat");
+		
+		chat.addAction(new ButtonAction() {
+			@Override
+			public void execute() {
+				Minecraft.getMinecraft().displayGuiScreen(new MenuChat());
+			}
+		});
+		
 		hud.addAction(new ButtonAction() {
 			@Override
 			public void execute() {
 				Minecraft.getMinecraft().displayGuiScreen(new MenuHud());
 			}
 		});
+		
 		keypad.addAction(new ButtonAction() {
 			@Override
 			public void execute() {
 				Minecraft.getMinecraft().displayGuiScreen(new MenuKeypad());
 			}
 		});
+		
 		armorhud.addAction(new ButtonAction() {
 			@Override
 			public void execute() {
 				Minecraft.getMinecraft().displayGuiScreen(new MenuArmorHud());
 			}
 		});
+		
 		potionhud.addAction(new ButtonAction() {
 			@Override
 			public void execute() {
 				Minecraft.getMinecraft().displayGuiScreen(new MenuPotionHud());
 			}
 		});
+		
 		effects.addAction(new ButtonAction() {
 			@Override
 			public void execute() {
 				Minecraft.getMinecraft().displayGuiScreen(new MenuEffect());
 			}
 		});
+		
 		modules.addAction(new ButtonAction() {
 			@Override
 			public void execute() {
 				Minecraft.getMinecraft().displayGuiScreen(new MenuModules());
 			}
 		});
+		
 		this.buttonList.add(hud);
 		this.buttonList.add(keypad);
 		this.buttonList.add(armorhud);
 		this.buttonList.add(potionhud);
 		this.buttonList.add(effects);
 		this.buttonList.add(modules);
+		this.buttonList.add(chat);
 	}
 
 	@Override

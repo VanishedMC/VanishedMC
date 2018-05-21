@@ -35,6 +35,8 @@ public class SettingsManager {
 		modules.add(client.getHudModule());
 		modules.add(client.getKeypadModule());
 		modules.add(client.getModuleManager());
+		modules.add(client.getChatManager());
+		
 		if (!clientDir.exists()) {
 			clientDir.mkdirs();
 		}

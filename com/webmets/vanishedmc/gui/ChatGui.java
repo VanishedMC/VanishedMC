@@ -1,15 +1,21 @@
 package com.webmets.vanishedmc.gui;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
-import org.lwjgl.LWJGLUtil;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
 import com.google.common.collect.Lists;
-import com.webmets.vanishedmc.utils.Utils;
+import com.webmets.vanishedmc.VanishedMC;
+import com.webmets.vanishedmc.chat.ChatManager;
+import com.webmets.vanishedmc.chat.ChatTab;
+import com.webmets.vanishedmc.chat.ChatTrigger;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ChatLine;
@@ -22,22 +28,24 @@ import net.minecraft.util.MathHelper;
 
 public class ChatGui extends GuiNewChat {
 
-	private int currentMenu = 0;
-	private List guildChat = Lists.newArrayList();
-	private List partyChat = Lists.newArrayList();
-	private List privateChat = Lists.newArrayList();
+	private VanishedMC client = VanishedMC.instance;
+	private ChatManager chatManager;
+	private List<ChatTab> openTabs;
 
 	public ChatGui(Minecraft mcIn) {
 		super(mcIn);
+		openTabs = new ArrayList<>();
+		chatManager = client.getChatManager();
 	}
 
 	@Override
 	public void drawChat(int p_146230_1_) {
-		List chat = currentMenu == 0 ? this.field_146253_i
-				: currentMenu == 1 ? guildChat : currentMenu == 2 ? partyChat : privateChat;
-		if (!Utils.onHypixel()) {
-			chat = this.field_146253_i;
+		if (chatManager == null) {
+			chatManager = client.getChatManager();
+			return;
 		}
+		List chat = openTabs.size() == 0 ? this.field_146253_i : getChatForTabs(openTabs);
+
 		if (this.mc.gameSettings.chatVisibility != EntityPlayer.EnumChatVisibility.HIDDEN) {
 			int var2 = this.getLineCount();
 			boolean var3 = false;
@@ -113,39 +121,56 @@ public class ChatGui extends GuiNewChat {
 				GlStateManager.popMatrix();
 			}
 		}
-		boolean betterChat = Utils.onHypixel();
-		if(betterChat) {
-			renderChatTabs(chat);
+		boolean betterChat = true;
+		if (betterChat) {
+			renderChatTabs(openTabs);
 		} else {
-			currentMenu = 0;
+			openTabs.clear();
 		}
 	}
 
-	private void renderChatTabs(List chat) {
-		if (this.getChatOpen() && chat.size() > 0 || currentMenu != 0) {
+	private void renderChatTabs(List<ChatTab> tabs) {
+		if (this.getChatOpen() && getChatForTabs(tabs).size() >= 0 || openTabs.size() != 0) {
 			GL11.glPopMatrix();
 			if (getChatOpen()) {
 				int y = mc.displayHeight / 2 - 26;
-				for (int i = 0; i < 4; i++) {
+				int i = 0;
+				for (ChatTab tab : chatManager.getTabsForCurrentServer()) {
 					this.drawRect(i * 50 + (i == 0 ? 2 : 1), y, i * 50 + 50, y + 10,
-							currentMenu == i ? 0x80000000 : getHoveredButton() == i ? 0x80000000 : 0x90424242);
-					String text = "";
-					if (i == 0) {
-						text = "All";
-					} else if (i == 1) {
-						text = "Guild";
-					} else if (i == 2) {
-						text = "Party";
-					} else if (i == 3) {
-						text = "Private";
-					}
+							openTabs.contains(tab) ? 0x80000000 : getHoveredButton() == i ? 0x80000000 : 0x90424242);
+					String text = tab.getName();
 					mc.fontRendererObj.func_175063_a(text, (float) ((i * 50 + (i == 0 ? 2 : 1) + i * 50 + 50) / 2
 							- mc.fontRendererObj.getStringWidth(text) / 2), (float) y + 1, -1);
+					i++;
 				}
 				clickEvent();
 			}
 			GL11.glPushMatrix();
 		}
+	}
+
+	private List getChatForTabs(List<ChatTab> tabs) {
+		Map<Long, Object> result = new HashMap<>();
+		Map<Long, Object> flipped = new HashMap<>();
+		List finalList = Lists.newArrayList();
+		List flippedFinalList = Lists.newArrayList();
+		for (ChatTab tab : tabs) {
+			for (Long time : tab.getChat().keySet()) {
+				Object o = tab.getChat().get(time);
+				if (result.containsKey(time)) {
+					continue;
+				}
+				result.put(time, o);
+			}
+		}
+		Map<Long, Object> sorterd = new TreeMap<Long, Object>(result);
+		for(Long l : sorterd.keySet()) {
+			finalList.add(result.get(l));
+		}
+		for(int i = finalList.size()-1; i >= 0; i--) {
+			flippedFinalList.add(finalList.get(i));
+		}
+		return flippedFinalList;
 	}
 
 	@Override
@@ -158,45 +183,62 @@ public class ChatGui extends GuiNewChat {
 		List var6 = GuiUtilRenderComponents.func_178908_a(p_146237_1_, var5, this.mc.fontRendererObj, false, false);
 		boolean var7 = this.getChatOpen();
 		IChatComponent var9;
-
-		for (Iterator var8 = var6.iterator(); var8.hasNext(); this.field_146253_i.add(0,
-				new ChatLine(p_146237_3_, var9, p_146237_2_))) {
-			var9 = (IChatComponent) var8.next();
-
-			if (var7 && this.scrollPos > 0) {
-				this.isScrolled = true;
-				this.scroll(1);
+		Iterator it = var6.iterator();
+		while (it.hasNext()) {
+			var9 = (IChatComponent) it.next();
+			ChatLine line = new ChatLine(p_146237_3_, var9, p_146237_2_);
+			this.field_146253_i.add(0, line);
+			for (ChatTab tab : chatManager.getTabsForCurrentServer()) {
+				if(tab.matches(p_146237_1_.getUnformattedText())) {
+					tab.addToChat(line);
+				}
 			}
-		}
-
-		while (this.field_146253_i.size() > 100) {
-			this.field_146253_i.remove(this.field_146253_i.size() - 1);
 		}
 
 		if (!p_146237_4_) {
 			this.chatLines.add(0, new ChatLine(p_146237_3_, p_146237_1_, p_146237_2_));
-			if (p_146237_1_.getUnformattedText().startsWith("§2Guild > ")) {
-				guildChat.add(0, new ChatLine(p_146237_3_, p_146237_1_, p_146237_2_));
-			}
-			if (p_146237_1_.getUnformattedText().startsWith("From")
-					|| p_146237_1_.getUnformattedText().startsWith("To")) {
-				privateChat.add(0, new ChatLine(p_146237_3_, p_146237_1_, p_146237_2_));
-			}
-			if (p_146237_1_.getUnformattedText().startsWith("§9Party > ")) {
-				partyChat.add(0, new ChatLine(p_146237_3_, p_146237_1_, p_146237_2_));
-			}
+		}
+	}
 
-			while (this.chatLines.size() > 100) {
-				this.chatLines.remove(this.chatLines.size() - 1);
-			}
+	private boolean leftClick = false;
+
+	@Override
+	public void clearChatMessages() {
+		super.clearChatMessages();
+		openTabs.clear();
+		if (chatManager == null) {
+			return;
+		}
+		for (ChatTab tab : chatManager.getTabs()) {
+			tab.getChat().clear();
 		}
 	}
 
 	private void clickEvent() {
 		if (Mouse.isButtonDown(0)) {
-			if (getHoveredButton() >= 0) {
-				currentMenu = getHoveredButton();
+			if (leftClick) {
+				return;
 			}
+			leftClick = true;
+			if (getHoveredButton() >= 0) {
+				ChatTab tab = chatManager.getTabsForCurrentServer().get(getHoveredButton());
+				if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+					if (openTabs.contains(tab)) {
+						openTabs.remove(tab);
+					} else {
+						openTabs.add(tab);
+					}
+				} else {
+					if (openTabs.size() == 1 && openTabs.get(0) == tab) {
+						openTabs.clear();
+						return;
+					}
+					openTabs.clear();
+					openTabs.add(tab);
+				}
+			}
+		} else {
+			leftClick = false;
 		}
 	}
 
@@ -205,7 +247,7 @@ public class ChatGui extends GuiNewChat {
 		int my = Mouse.getY() / 2;
 		int y1 = 16;
 		int y2 = y1 + 10;
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < chatManager.getTabsForCurrentServer().size(); i++) {
 			int x1 = i * 50 + (i == 0 ? 2 : 1);
 			int x2 = i * 50 + 50;
 			if (mx >= x1 && mx <= x2) {
