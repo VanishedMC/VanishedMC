@@ -14,7 +14,7 @@ import com.webmets.vanishedmc.gui.settings.Configurable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ServerData;
 
-public class ChatManager implements Configurable{
+public class ChatManager implements Configurable {
 
 	private Map<String, List<ChatTab>> tabs;
 
@@ -24,9 +24,9 @@ public class ChatManager implements Configurable{
 
 	/**
 	 * Get a list of all chat tabs for the current server
-	 * @return
-	 * List
-	 * */
+	 * 
+	 * @return List
+	 */
 	public List<ChatTab> getTabsForCurrentServer() {
 		ServerData data = Minecraft.getMinecraft().getCurrentServerData();
 		if (data == null) {
@@ -37,9 +37,9 @@ public class ChatManager implements Configurable{
 
 	/**
 	 * Get a list of all chat tabs for the given server
-	 * @return
-	 * List
-	 * */
+	 * 
+	 * @return List
+	 */
 	public List<ChatTab> getTabsForServer(String ip) {
 		if (tabs.containsKey(ip)) {
 			return tabs.get(ip);
@@ -52,7 +52,7 @@ public class ChatManager implements Configurable{
 
 	/**
 	 * Add the provided tab to a server
-	 * */
+	 */
 	public void addTabToServer(String server, ChatTab tab) {
 		List<ChatTab> oldTabs = tabs.get(server);
 		if (oldTabs == null) {
@@ -62,16 +62,30 @@ public class ChatManager implements Configurable{
 		tabs.put(server, oldTabs);
 	}
 
+	public void removeTabFromServer(String ip, ChatTab tab) {
+		List<ChatTab> tabs = null;
+		for (String s : getList().keySet()) {
+			if (s.equalsIgnoreCase(ip)) {
+				tabs = getList().get(s);
+			}
+		}
+		if (tabs == null) {
+			return;
+		}
+		tabs.remove(tab);
+		this.tabs.put(ip, tabs);
+	}
+
 	/**
 	 * Get the full hashmap with server IP's and tab lists
-	 * */
+	 */
 	public Map<String, List<ChatTab>> getList() {
 		return tabs;
 	}
 
 	/**
 	 * Get only the chat tabs, with out server IP for quick access.
-	 * */
+	 */
 	public List<ChatTab> getTabs() {
 		List<ChatTab> result = new ArrayList<>();
 		for (String s : tabs.keySet()) {
@@ -81,25 +95,25 @@ public class ChatManager implements Configurable{
 		}
 		return result;
 	}
-	
+
 	@Override
 	public String getKey() {
 		return "chatmanager";
 	}
-	
+
 	@Override
 	public JsonObject getSettings() {
 		JsonObject object = new JsonObject();
-		for(String s : getList().keySet()) {
+		for (String s : getList().keySet()) {
 			JsonObject array = new JsonObject();
-			for(ChatTab tab : getList().get(s)) {
+			for (ChatTab tab : getList().get(s)) {
 				array.add(tab.getName(), tab.getSettings());
 			}
 			object.add(s, array);
 		}
 		return object;
 	}
-	
+
 	@Override
 	public void loadSettings(JsonObject json) {
 		Iterator<Entry<String, JsonElement>> itr = json.entrySet().iterator();

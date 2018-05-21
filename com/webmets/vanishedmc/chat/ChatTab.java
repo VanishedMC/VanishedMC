@@ -8,12 +8,14 @@ import java.util.Map;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.webmets.vanishedmc.gui.settings.Configurable;
+import com.webmets.vanishedmc.utils.FilterRequirements;
 
 public class ChatTab implements Configurable {
 
 	private String name;
 	private List<ChatTrigger> triggers;
 	private Map<Long, Object> chat;
+	private FilterRequirements requirements = FilterRequirements.REQUIRE_ALL;
 
 	public ChatTab(String name) {
 		this.name = name;
@@ -43,17 +45,37 @@ public class ChatTab implements Configurable {
 		return this;
 	}
 
+	public ChatTab removeTrigger(ChatTrigger trigger) {
+		this.triggers.remove(trigger);
+		return this;
+	}
+
+	public FilterRequirements getRequirements() {
+		return requirements;
+	}
+
+	public void setRequirements(FilterRequirements requirements) {
+		this.requirements = requirements;
+	}
+
 	public boolean matches(String message) {
 		int i = 1;
+		boolean fail = false;
 		for (ChatTrigger trigger : triggers) {
 			if (trigger.matches(message)) {
+				if (requirements == FilterRequirements.REQUIRE_ONE) {
+					return true;
+				}
 				i++;
 				continue;
 			} else {
-				return false;
+				if (requirements == FilterRequirements.REQUIRE_ALL) {
+					return false;
+				}
+				fail = true;
 			}
 		}
-		return true;
+		return !fail;
 	}
 
 	@Override
@@ -69,12 +91,13 @@ public class ChatTab implements Configurable {
 			array.add(trigger.getSettings());
 		}
 		object.add("triggers", array);
+		object.addProperty("requirements", getRequirements().toString());
 		return object;
 	}
 
 	@Override
 	public void loadSettings(JsonObject json) {
-		System.out.println(json.toString());
+		setRequirements(FilterRequirements.valueOf(json.get("requirements").getAsString()));
 		JsonArray array = json.get("triggers").getAsJsonArray();
 		for (int i = 0; i < array.size(); i++) {
 			ChatTrigger trigger = new ChatTrigger();

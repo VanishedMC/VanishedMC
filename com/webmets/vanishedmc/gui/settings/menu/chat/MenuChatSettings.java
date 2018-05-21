@@ -34,12 +34,21 @@ public class MenuChatSettings extends Menu {
 		int i = 30;
 		for (ChatTab tab : tabs) {
 			final ToggleButton button = new ToggleButton(0, 140, i, 100, 20, tab.getName());
+			final ToggleButton delete = new ToggleButton(0, 245, i, 20, 20, "§4§lX");
 			button.addAction(new ButtonAction() {
 				@Override
 				public void execute() {
 					Minecraft.getMinecraft().displayGuiScreen(new MenuChatTabSettings(tab));
 				}
 			});
+			delete.addAction(new ButtonAction() {
+				@Override
+				public void execute() {
+					chat.removeTabFromServer(ip, tab);
+					mc.displayGuiScreen(new MenuChatSettings(ip));
+				}
+			});
+			this.buttonList.add(delete);
 			this.buttonList.add(button);
 			i += 25;
 		}
