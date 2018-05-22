@@ -7,16 +7,21 @@ import org.lwjgl.opengl.DisplayMode;
 import com.webmets.vanishedmc.VanishedMC;
 import com.webmets.vanishedmc.modules.Module;
 import com.webmets.vanishedmc.modules.chat.ChatTriggeredModule;
-import com.webmets.vanishedmc.modules.chat.ModuleAutoGG;
+
+import net.minecraft.client.Minecraft;
 
 public class ChatController {
 
 	private VanishedMC client = VanishedMC.instance;
 	
-	public void messageReceived(String message) {	
+	public boolean messageReceived(String message) {	
 		if(message.equalsIgnoreCase(".record") && VanishedMC.DEBUGMODE) {
 			try {
+				Minecraft mc = Minecraft.getMinecraft();
+				mc.displayWidth = 1280;
+				mc.displayHeight = 720;
 				Display.setDisplayMode(new DisplayMode(1280, 720));
+				return false;
 			} catch (LWJGLException e) {
 				e.printStackTrace();
 			}
@@ -26,6 +31,7 @@ public class ChatController {
 				((ChatTriggeredModule)m).chatEvent(message);
 			}
 		}
+		return true;
 	}
 	
 }

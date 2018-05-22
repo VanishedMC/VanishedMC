@@ -24,10 +24,12 @@ public class SprintModule extends Module {
 
 	@Override
 	public void onEnable() {
+		client.getSettingsManager().saveSettings();
 	}
 
 	@Override
 	public void onDisable() {
+		client.getSettingsManager().saveSettings();
 	}
 
 }

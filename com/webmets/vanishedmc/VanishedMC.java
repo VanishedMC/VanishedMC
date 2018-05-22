@@ -28,7 +28,7 @@ public class VanishedMC {
 	 */
 
 	// Variables
-	private final float version = 0.4f;
+	private final float version = 0.5f;
 	private boolean updateAvailable = false;
 	public static boolean DEBUGMODE = false;
 	
