@@ -8,6 +8,7 @@ import com.webmets.vanishedmc.chat.ChatManager;
 import com.webmets.vanishedmc.chat.ChatTab;
 import com.webmets.vanishedmc.chat.ChatTrigger;
 import com.webmets.vanishedmc.gui.buttons.ButtonAction;
+import com.webmets.vanishedmc.gui.buttons.CustomTextField;
 import com.webmets.vanishedmc.gui.buttons.SelectorButton;
 import com.webmets.vanishedmc.gui.buttons.SliderButton;
 import com.webmets.vanishedmc.gui.buttons.ToggleButton;
@@ -20,9 +21,11 @@ import net.minecraft.client.gui.GuiButton;
 public class MenuChatTabSettings extends Menu {
 
 	private ChatTab tab;
+	final CustomTextField name = new CustomTextField(0, Minecraft.getMinecraft().fontRendererObj, 140, 10, 100, 20);
 
 	public MenuChatTabSettings(ChatTab tab) {
 		this.tab = tab;
+		name.setText("");
 	}
 
 	@Override
@@ -53,18 +56,19 @@ public class MenuChatTabSettings extends Menu {
 					mc.displayGuiScreen(new MenuChatTabSettings(tab));
 				}
 			});
-
+			
 			this.buttonList.add(button);
 			this.buttonList.add(delete);
 			y += 25;
 			i++;
 		}
-		final SelectorButton requirements = new SelectorButton(0, 140, y, 100, 20, "",
+		final SelectorButton requirements = new SelectorButton(0, 140, y + 25, 100, 20, "",
 				Arrays.asList("Require one", "Require all"));
-		final ToggleButton create = new ToggleButton(0, 140, y + 25, 100, 20, "Create");
-
+		final ToggleButton create = new ToggleButton(0, 140, y, 100, 20, "Create");
+		name.yPosition = y + 50;
 		// Set states
 		requirements.setCurrent(tab.getRequirements().toString().replaceAll("_", " ").toLowerCase());
+		name.setText(tab.getName());
 
 		// Actions
 		create.addAction(new ButtonAction() {
@@ -87,6 +91,33 @@ public class MenuChatTabSettings extends Menu {
 		// Adding buttons
 		this.buttonList.add(create);
 		this.buttonList.add(requirements);
+	}
+
+	@Override
+	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+		super.drawScreen(mouseX, mouseY, partialTicks);
+		name.drawTextBox();
+	}
+
+	@Override
+	public void updateScreen() {
+		super.updateScreen();
+		name.updateCursorCounter();
+	}
+
+	@Override
+	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+		super.mouseClicked(mouseX, mouseY, mouseButton);
+		name.mouseClicked(mouseX, mouseY, mouseButton);
+	}
+
+	@Override
+	protected void keyTyped(char typedChar, int keyCode) throws IOException {
+		super.keyTyped(typedChar, keyCode);
+		if (name.isFocused()) {
+			name.textboxKeyTyped(typedChar, keyCode);
+			tab.setName(name.getText());
+		}
 	}
 
 	@Override

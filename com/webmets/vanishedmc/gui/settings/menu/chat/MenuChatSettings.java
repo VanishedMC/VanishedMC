@@ -1,6 +1,7 @@
 package com.webmets.vanishedmc.gui.settings.menu.chat;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 import com.webmets.vanishedmc.chat.ChatManager;
@@ -22,6 +23,7 @@ public class MenuChatSettings extends Menu {
 		this.ip = ip;
 	}
 
+	private int iterations;
 	@Override
 	public void initGui() {
 		// Variables
@@ -32,9 +34,12 @@ public class MenuChatSettings extends Menu {
 
 		// Initialize buttons
 		int i = 30;
+		iterations = 0;
 		for (ChatTab tab : tabs) {
 			final ToggleButton button = new ToggleButton(0, 140, i, 100, 20, tab.getName());
 			final ToggleButton delete = new ToggleButton(0, 245, i, 20, 20, "§4§lX");
+			final ToggleButton moveUp = new ToggleButton(0, 270, i, 20, 20, "§l⇧");
+			final ToggleButton moveDown = new ToggleButton(0, 295, i, 20, 20, "§l⇩");
 			button.addAction(new ButtonAction() {
 				@Override
 				public void execute() {
@@ -48,9 +53,33 @@ public class MenuChatSettings extends Menu {
 					mc.displayGuiScreen(new MenuChatSettings(ip));
 				}
 			});
+			moveUp.addAction(new ButtonAction() {
+				@Override
+				public void execute() {
+					Collections.swap(tabs, tabs.indexOf(tab), tabs.indexOf(tab)-1);
+					mc.displayGuiScreen(new MenuChatSettings(ip));
+				}
+			});
+			moveDown.addAction(new ButtonAction() {
+				@Override
+				public void execute() {
+					Collections.swap(tabs, tabs.indexOf(tab), tabs.indexOf(tab)+1);
+					mc.displayGuiScreen(new MenuChatSettings(ip));
+				}
+			});
+
 			this.buttonList.add(delete);
 			this.buttonList.add(button);
+			if (iterations != 0) {
+				this.buttonList.add(moveUp);
+			} else {
+				moveDown.xPosition = 270;
+			}
+			if (iterations < tabs.size()-1) {
+				this.buttonList.add(moveDown);
+			}
 			i += 25;
+			iterations++;
 		}
 		final ToggleButton create = new ToggleButton(0, 245, i, 100, 20, "Create");
 		name = new CustomTextField(0, mc.fontRendererObj, 140, i, 100, 20);
@@ -59,7 +88,7 @@ public class MenuChatSettings extends Menu {
 		create.addAction(new ButtonAction() {
 			@Override
 			public void execute() {
-				if(!name.getText().trim().isEmpty()) {
+				if (!name.getText().trim().isEmpty()) {
 					chat.addTabToServer(ip, new ChatTab(name.getText()));
 					mc.displayGuiScreen(new MenuChatSettings(ip));
 				}
@@ -74,11 +103,11 @@ public class MenuChatSettings extends Menu {
 	@Override
 	public void keyTyped(char c, int k) throws IOException {
 		super.keyTyped(c, k);
-		if(name.isFocused()) {
+		if (name.isFocused()) {
 			name.textboxKeyTyped(c, k);
 		}
 	}
-	
+
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
 		super.mouseClicked(mouseX, mouseY, mouseButton);

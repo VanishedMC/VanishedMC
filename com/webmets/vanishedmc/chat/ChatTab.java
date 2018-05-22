@@ -105,4 +105,8 @@ public class ChatTab implements Configurable {
 			addChatTrigger(trigger);
 		}
 	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }

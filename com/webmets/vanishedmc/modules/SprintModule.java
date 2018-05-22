@@ -10,11 +10,11 @@ public class SprintModule extends Module {
 
 	/**
 	 * Sprint module, keep the player sprinting only when possible
-	 * */
+	 */
 	@Override
 	public void tick() {
-		if(this.isEnabled()) {
-			if(!(mc.thePlayer.isCollidedHorizontally) && mc.thePlayer.moveForward > 0.0f) {
+		if (this.isEnabled()) {
+			if (!(mc.thePlayer.isCollidedHorizontally) && mc.thePlayer.moveForward > 0.0f) {
 				mc.thePlayer.setSprinting(true);
 			} else {
 				mc.thePlayer.setSprinting(false);
@@ -24,12 +24,16 @@ public class SprintModule extends Module {
 
 	@Override
 	public void onEnable() {
-		client.getSettingsManager().saveSettings();
+		if (client.getSettingsManager() != null) {
+			client.getSettingsManager().saveSettings();
+		}
 	}
 
 	@Override
 	public void onDisable() {
-		client.getSettingsManager().saveSettings();
+		if (client.getSettingsManager() != null) {
+			client.getSettingsManager().saveSettings();
+		}
 	}
 
 }

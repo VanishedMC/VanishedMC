@@ -48,7 +48,7 @@ public class SettingsManager {
 	}
 
 	public void saveSettings() {
-		
+		VanishedMC.log("Saving settings");
 		try {
 			JsonObject json = new JsonObject();
 			
