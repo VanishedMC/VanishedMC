@@ -43,7 +43,6 @@ public class GuiIngameHook extends GuiIngame {
 		client.getHudModule().render(2, 3);
 		client.getKeypadModule().render(keyPadX, keyPadY);
 		client.getArmorModule().render();
-
 	}
 
 	public void setKeypadLocation(int x, int y) {

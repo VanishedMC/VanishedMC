@@ -2,23 +2,33 @@ package com.webmets.vanishedmc.gui;
 
 import java.awt.Color;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.URI;
+import java.net.UnknownHostException;
 
 import org.lwjgl.opengl.GL11;
 
 import com.webmets.vanishedmc.VanishedMC;
 import com.webmets.vanishedmc.gui.buttons.CustomButton;
 import com.webmets.vanishedmc.gui.settings.SettingsGui;
+import com.webmets.vanishedmc.utils.AccountUtils;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiLabel;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.client.gui.GuiSelectWorld;
+import net.minecraft.client.network.NetHandlerLoginClient;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.network.EnumConnectionState;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.handshake.client.C00Handshake;
+import net.minecraft.network.login.client.C00PacketLoginStart;
+import server.ServerConnection;
 
 public class CustomMainMenu extends GuiMainMenu {
 
@@ -112,7 +122,7 @@ public class CustomMainMenu extends GuiMainMenu {
 		GlStateManager.enableAlpha();
 		Tessellator var4 = Tessellator.getInstance();
 		WorldRenderer var5 = var4.getWorldRenderer();
-		short var6 = 128+64;
+		short var6 = 128 + 64;
 		int var7 = this.width / 2 - var6 / 2;
 		byte var8 = 70;
 		this.drawGradientRect(0, 0, this.width, this.height / 2, -2130706433, 16777215);

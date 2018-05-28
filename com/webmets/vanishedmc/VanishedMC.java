@@ -3,9 +3,7 @@ package com.webmets.vanishedmc;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
 
 import com.webmets.vanishedmc.chat.ChatManager;
 import com.webmets.vanishedmc.controllers.ChatController;
@@ -20,6 +18,8 @@ import com.webmets.vanishedmc.settings.BasicSettings;
 import com.webmets.vanishedmc.siteconnection.UpdateChecker;
 import com.webmets.vanishedmc.utils.AccountUtils;
 
+import server.ServerConnection;
+
 public class VanishedMC {
 
 	/**
@@ -31,22 +31,22 @@ public class VanishedMC {
 	private final float version = 0.5f;
 	private boolean updateAvailable = false;
 	public static boolean DEBUGMODE = false;
-	
+
 	private UpdateChecker updateChecker = new UpdateChecker();
 	private BasicSettings basicSettings;
-	
+
 	private KeyboardController keyboardController;
 	private MouseController mouseController;
 	private ChatController chatController;
-	
+
 	private ModuleManager moduleManager;
 	private GuiHudModule hudModule;
 	private GuiKeypadModule keypadModule;
 	private GuiArmorModule armorModule;
 	private ChatManager chatManager;
-	
+
 	private SettingsManager settingsManager;
-	
+
 	// Constructor
 	public void start() {
 		Display.setTitle("VanishedMC Client (v" + version + ")");
@@ -57,14 +57,14 @@ public class VanishedMC {
 		keypadModule = new GuiKeypadModule();
 		armorModule = new GuiArmorModule();
 		chatManager = new ChatManager();
-		
+
 		keyboardController = new KeyboardController();
 		mouseController = new MouseController();
 		chatController = new ChatController();
-		
+
 		settingsManager = new SettingsManager();
 		// Used to automate login without storing password in the code
-		if(!AccountUtils.login.equalsIgnoreCase("null")) {
+		if (!AccountUtils.login.equalsIgnoreCase("null")) {
 			AccountUtils.login(AccountUtils.login);
 			AccountUtils.login = "null";
 			DEBUGMODE = true;
@@ -75,19 +75,19 @@ public class VanishedMC {
 	public SettingsManager getSettingsManager() {
 		return settingsManager;
 	}
-	
+
 	public ChatManager getChatManager() {
 		return chatManager;
 	}
-	
+
 	public GuiArmorModule getArmorModule() {
 		return armorModule;
 	}
-	
+
 	public ChatController getChatController() {
 		return chatController;
 	}
-	
+
 	public UpdateChecker getUpdateChecker() {
 		return updateChecker;
 	}
@@ -95,11 +95,11 @@ public class VanishedMC {
 	public GuiKeypadModule getKeypadModule() {
 		return keypadModule;
 	}
-	
+
 	public MouseController getMouseController() {
 		return mouseController;
 	}
-	
+
 	public GuiHudModule getHudModule() {
 		return hudModule;
 	}
@@ -115,7 +115,7 @@ public class VanishedMC {
 	public boolean isUpdateAvailable() {
 		return updateAvailable;
 	}
-	
+
 	public KeyboardController getKeyboardController() {
 		return keyboardController;
 	}
@@ -127,7 +127,7 @@ public class VanishedMC {
 	public void setUpdateAvailable(boolean updateAvailable) {
 		this.updateAvailable = updateAvailable;
 	}
-	
+
 	// Static shit
 	public static VanishedMC instance = new VanishedMC();
 	private static SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");

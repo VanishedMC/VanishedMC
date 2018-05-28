@@ -14,11 +14,13 @@ import net.minecraft.util.Session;
 public class AccountUtils {
 
 	public static String login = "null";
-	
+
 	/**
-	 * Method to change Minecraft account ingame </br> </br>
-	 * This method is only used during development, and can not be triggered when the client is compiled
-	 * */
+	 * Method to change Minecraft account ingame </br>
+	 * </br>
+	 * This method is only used during development, and can not be triggered
+	 * when the client is compiled
+	 */
 	public static String login(String login) {
 		YggdrasilAuthenticationService authenticationService = new YggdrasilAuthenticationService(Proxy.NO_PROXY, "");
 		YggdrasilUserAuthentication authentication = (YggdrasilUserAuthentication) authenticationService
@@ -48,5 +50,10 @@ public class AccountUtils {
 		return displayText;
 	}
 
-	
+	public static void updateToken(String token) {
+		Session oldSession = Minecraft.getMinecraft().getSession();
+		Minecraft.getMinecraft().session = new Session(oldSession.getUsername(), oldSession.getPlayerID(), token,
+				"mojang");
+	}
+
 }
